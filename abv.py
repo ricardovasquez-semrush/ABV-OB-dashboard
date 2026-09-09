@@ -351,6 +351,22 @@ h1{margin:0;font:800 28px/1.15 var(--sans);letter-spacing:-.01em;color:var(--ink
 .sub{margin-top:5px;color:var(--ink-3);font:400 13px/1.5 var(--mono)}
 .sub b{color:var(--ink-2);font-weight:600}
 
+.themetog{flex:0 0 auto;appearance:none;cursor:pointer;display:inline-flex;
+  align-items:center;gap:8px;background:var(--surface);color:var(--ink-2);
+  border:1px solid var(--line-strong);border-radius:999px;padding:8px 14px 8px 11px;
+  font:600 13px/1 var(--sans);white-space:nowrap}
+.themetog:hover{border-color:var(--ink-3);color:var(--ink)}
+.themetog svg{width:16px;height:16px;flex:0 0 auto}
+.themetog .i-sun{display:none}
+.themetog .i-moon{display:block}
+/* the icon shows what a press will DO, so it flips with the resolved theme */
+:root[data-theme="dark"] .themetog .i-sun{display:block}
+:root[data-theme="dark"] .themetog .i-moon{display:none}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .themetog .i-sun{display:block}
+  :root:not([data-theme="light"]) .themetog .i-moon{display:none}
+}
+
 .stale{background:var(--notice-wash);border:1px solid var(--notice);
   border-radius:var(--r-md);padding:12px 16px;margin-bottom:20px;color:var(--ink-2)}
 .stale b{display:block;color:var(--notice);font-weight:700;margin-bottom:2px}
@@ -556,7 +572,8 @@ footer p{margin:0 0 12px}
   *{animation:none!important;transition:none!important}
 }
 @media (forced-colors:active){
-  .kpi,.card,.callout,.chart,.tw,.chip,.tab,.pill,.search input{border:1px solid CanvasText}
+  .kpi,.card,.callout,.chart,.tw,.chip,.tab,.pill,.search input,
+  .themetog{border:1px solid CanvasText}
   .tab[aria-selected="true"],.chip[aria-pressed="true"]{outline:2px solid Highlight}
   .rate .track i{background:Highlight}
 }
@@ -569,7 +586,7 @@ footer p{margin:0 0 12px}
     --ink:#000; --ink-2:#333; --ink-3:#555;
     --shadow-1:none; --shadow-2:none}
   body{background:#fff}
-  nav.tabs,.toolbar,a.skip{display:none!important}
+  nav.tabs,.toolbar,a.skip,.themetog{display:none!important}
   .panel[hidden]{display:block!important}
   .panel{break-before:page}
   .panel:first-of-type{break-before:auto}
@@ -642,6 +659,42 @@ JS = """
       setPanel(a.getAttribute("href").slice(1));
     });
   });
+
+  /* ------------------------------------------------------------- theme */
+  (function(){
+    var btn = document.getElementById("themetog");
+    if (!btn) return;
+    var root = document.documentElement;
+    var lbl = btn.querySelector(".lbl");
+    var mq = window.matchMedia ? matchMedia("(prefers-color-scheme: dark)") : null;
+
+    function stored(){
+      try { return localStorage.getItem("abv-theme"); } catch (e) { return null; }
+    }
+    /* what the page is ACTUALLY showing right now — an explicit choice if one
+       was made, otherwise whatever the operating system is asking for */
+    function resolved(){
+      var t = root.getAttribute("data-theme");
+      if (t === "dark" || t === "light") return t;
+      return mq && mq.matches ? "dark" : "light";
+    }
+    function paint(){
+      var dark = resolved() === "dark";
+      /* the control offers the OTHER theme, so it says what pressing will do */
+      lbl.textContent = dark ? "Light" : "Dark";
+      btn.setAttribute("aria-label", dark ? "Switch to light theme" : "Switch to dark theme");
+    }
+    btn.addEventListener("click", function(){
+      var next = resolved() === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      try { localStorage.setItem("abv-theme", next); } catch (e) {}
+      paint();
+    });
+    /* follow the OS only while the reader has not chosen for themselves */
+    if (mq && mq.addEventListener)
+      mq.addEventListener("change", function(){ if (!stored()) paint(); });
+    paint();
+  })();
 
   /* ------------------------------------------------------------ filtering */
   $$(".toolbar").forEach(function(bar){
@@ -938,9 +991,9 @@ def render(c):
     a('<div class="wrap">')
     a('<header><div class="mark" aria-hidden="true">ABV</div><div class="hd">'
       '<h1>ABV OB In Progress</h1>'
-      '<div class="sub">Beth King · Daniel Angol · <b>%s</b> · generated %s</div>'
-      '</div></header>'
-      % (_e(c["board"]["name"]), _e(et_stamp(c["generated_at_utc"]))))
+      '<div class="sub">Beth King · Daniel Angol · <b>%s</b> · generated %s</div></div>'
+      % (_e(c["board"]["name"]), _e(et_stamp(c["generated_at_utc"])))
+      + THEME_TOGGLE + '</header>')
 
     if c["age_h"] > MAX_AGE_HOURS:
         a('<div class="stale" role="status"><b>This page has not refreshed</b>'
@@ -1276,6 +1329,24 @@ HEAD = ("<title>ABV OB In Progress</title>\n"
         'family=Source+Sans+3:wght@400;600;700;800&'
         'family=Source+Code+Pro:wght@400;600&display=swap">\n')
 
+THEME_TOGGLE = (
+    '<button class="themetog" type="button" id="themetog" '
+    'aria-label="Switch to dark theme">'
+    '<svg class="i-moon" viewBox="0 0 20 20" fill="none" stroke="currentColor" '
+    'stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+    '<path d="M16.5 11.8A7 7 0 0 1 8.2 3.5a7 7 0 1 0 8.3 8.3Z"/></svg>'
+    '<svg class="i-sun" viewBox="0 0 20 20" fill="none" stroke="currentColor" '
+    'stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+    '<circle cx="10" cy="10" r="3.6"/><path d="M10 1.6v1.8M10 16.6v1.8M18.4 10h-1.8M3.4 10H1.6'
+    'M15.9 4.1l-1.3 1.3M5.4 14.6l-1.3 1.3M15.9 15.9l-1.3-1.3M5.4 5.4L4.1 4.1"/></svg>'
+    '<span class="lbl">Dark</span></button>')
+
+# Runs before the body paints, so a saved dark choice never flashes light first.
+# Storage can throw outright (private windows, thumbnail capture), hence try/catch.
+THEME_BOOT = ("<script>(function(){try{var t=localStorage.getItem('abv-theme');"
+              "if(t==='dark'||t==='light')document.documentElement"
+              ".setAttribute('data-theme',t);}catch(e){}})();</script>\n")
+
 NOSCRIPT = ("<noscript><style>"
             ".panel[hidden]{display:block!important}"
             "nav.tabs,.toolbar{display:none!important}"
@@ -1307,7 +1378,7 @@ def privacy_check(d, page):
 
 def emit(d, out=OUT, out_artifact=OUT_ARTIFACT):
     c = derive(d)
-    page = (HEAD + "<style>%s</style>\n" % CSS + NOSCRIPT + render(c)
+    page = (HEAD + "<style>%s</style>\n" % CSS + THEME_BOOT + NOSCRIPT + render(c)
             + "\n<script>" + JS + "</script>\n")
     privacy_check(d, page)
     os.makedirs(os.path.dirname(out), exist_ok=True)

@@ -1,5 +1,5 @@
 {
- "generated_at_utc": "2026-09-09T17:27:30Z",
+ "generated_at_utc": "2026-09-09T19:45:33Z",
  "board": {
   "id": "18372591859",
   "name": "FY26 Onboarding Board"
@@ -139,7 +139,7 @@
    "sub_start": "2026-07-31",
    "end_date": null,
    "days_open": "41",
-   "oc": "Matthew Peck",
+   "oc": "Ricardo Loureiro Vasquez",
    "aoe_assigned": "v",
    "forecast_end": "2026-09-09",
    "stage": "Discovery",
@@ -321,46 +321,6 @@
    "group": "in_progress"
   },
   {
-   "id": "12671801902",
-   "name": "Mariner Wealth Advisors",
-   "region": "AMER",
-   "mrr": "4166",
-   "products": "AIO",
-   "sub_start": "2026-07-29",
-   "end_date": null,
-   "days_open": "43",
-   "oc": "Daniel Hemhauser",
-   "aoe_assigned": {
-    "checked": false
-   },
-   "forecast_end": null,
-   "stage": "Not Started",
-   "risk_status": null,
-   "risk_type": null,
-   "risk_stage": null,
-   "url": "https://semrush.monday.com/boards/18372591859/pulses/12671801902",
-   "group": "in_progress"
-  },
-  {
-   "id": "12705076960",
-   "name": "Canadian Pacific Railway Company",
-   "region": "AMER",
-   "mrr": "6250",
-   "products": "AIO",
-   "sub_start": "2026-07-31",
-   "end_date": null,
-   "days_open": "41",
-   "oc": "Daniel Hemhauser",
-   "aoe_assigned": "v",
-   "forecast_end": null,
-   "stage": "Not Started",
-   "risk_status": null,
-   "risk_type": null,
-   "risk_stage": null,
-   "url": "https://semrush.monday.com/boards/18372591859/pulses/12705076960",
-   "group": "in_progress"
-  },
-  {
    "id": "12685329441",
    "name": "Trex Inc",
    "region": "AMER",
@@ -389,9 +349,7 @@
    "end_date": null,
    "days_open": "38",
    "oc": "Kat Giorgio",
-   "aoe_assigned": {
-    "checked": false
-   },
+   "aoe_assigned": "v",
    "forecast_end": null,
    "stage": "Discovery",
    "risk_status": null,
