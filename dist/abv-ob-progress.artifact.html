@@ -2,246 +2,636 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&family=Geist+Mono:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=Source+Code+Pro:wght@400;600&display=swap">
 <style>
-:root{color-scheme:dark;
-  --void:#0a0e14; --panel:#11161f; --raise:#171e2b;
-  --ink:#e9eef7; --ink-2:#9aa7ba; --muted:#7b89a0;
-  --grid:#232c3d; --hair:rgba(140,170,220,.14); --hover:#151c28;
-  --cy:#3ee0f0; --vi:#8f7ff0;
-  --good:#3ddc97; --warn:#f5b83d; --crit:#ff5d5d;
-  --s1:#119dab; --s2:#8f7ff0; --s3:#c0851f; --s4:#cf5f8a;
-  --disp:"Geist",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
-*{box-sizing:border-box}
-body{margin:0;background:var(--void);color:var(--ink);font:14.5px/1.6 var(--disp)}
-.wrap{max-width:980px;margin:0 auto;padding:34px 26px 64px}
-
-header{display:flex;gap:16px;align-items:flex-start;
-       border-bottom:2px solid var(--cy);padding-bottom:16px;margin-bottom:26px}
-.tile{flex:0 0 auto;width:46px;height:46px;border-radius:11px;background:var(--raise);
-      border:1px solid var(--grid);display:flex;align-items:center;justify-content:center;
-      font:700 16px var(--mono);letter-spacing:.06em;color:var(--cy)}
-.hd{min-width:0}
-h1{font:700 25px/1.15 var(--disp);letter-spacing:.035em;text-transform:uppercase;margin:0;
-   text-wrap:balance}
-h1 b{color:var(--cy);font-weight:700}
-.sub{color:var(--muted);font:12px/1.65 var(--mono);margin-top:7px}
-.lede{color:var(--ink-2);font:14px/1.65 var(--disp);margin:0 0 4px;max-width:64ch}
-
-h2{font:700 12px/1.3 var(--disp);letter-spacing:.14em;text-transform:uppercase;
-   color:var(--cy);margin:38px 0 12px;display:flex;align-items:center;gap:8px}
-h2::before{content:"//";color:var(--muted);font:700 11px var(--mono)}
-h2 span.n{color:var(--muted);font:600 11px var(--mono);letter-spacing:.06em}
-
-.stalebanner{background:rgba(245,184,61,.1);border:1px solid rgba(245,184,61,.45);
-  border-left:3px solid var(--warn);border-radius:10px;padding:11px 15px;margin:0 0 22px;
-  color:var(--ink-2);font:13px/1.6 var(--disp)}
-.stalebanner b{color:var(--warn);display:block;font:700 12px var(--disp);
-  letter-spacing:.09em;text-transform:uppercase;margin-bottom:3px}
-
-.bkpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}
-.bkpi{background:var(--panel);border:1px solid var(--grid);border-radius:12px;
-      padding:14px 16px;cursor:help;min-width:0}
-.bkpi .v{font:700 27px/1.1 var(--disp);color:var(--ink);font-variant-numeric:tabular-nums}
-.bkpi .v small{font:600 15px var(--disp);color:var(--ink-2)}
-.bkpi .l{font:600 10.5px/1.4 var(--disp);letter-spacing:.09em;text-transform:uppercase;
-         color:var(--muted);margin-top:5px}
-.bkpi .s{font:11px/1.5 var(--mono);color:var(--muted);margin-top:7px;
-         padding-top:7px;border-top:1px solid var(--hair)}
-
-.chart{background:var(--panel);border:1px solid var(--hair);border-radius:12px;
-       padding:16px 16px 12px}
-.chart svg{display:block;width:100%;height:auto}
-.chart .cap{color:var(--muted);font:11.5px/1.6 var(--mono);margin-top:10px;
-            padding-top:9px;border-top:1px solid var(--hair)}
-text{font:600 11px var(--mono);fill:var(--ink-2)}
-text.nm{fill:var(--ink);font:600 12px var(--disp)}
-text.val{fill:var(--ink-2);font-variant-numeric:tabular-nums}
-text.zero{fill:var(--muted)}
-
-.tblwrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
-         border-radius:12px}
-.btbl{width:100%;border-collapse:collapse;font:13px/1.5 var(--disp);
-      font-variant-numeric:tabular-nums}
-.btbl th{font:600 10px var(--disp);letter-spacing:.1em;text-transform:uppercase;
-         color:var(--muted);text-align:left;padding:9px 12px;
-         border-bottom:1px solid var(--grid);white-space:nowrap}
-.btbl td{padding:8px 12px;border-bottom:1px solid var(--hair);color:var(--ink-2);
-         vertical-align:middle}
-.btbl tr:last-child td{border-bottom:0}
-.btbl td.nm{color:var(--ink);font-weight:600}
-.btbl td.num,.btbl th.num{text-align:right}
-.btbl a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--hair)}
-.btbl a:hover{color:var(--cy);border-bottom-color:var(--cy)}
-.btbl a:focus-visible{outline:2px solid var(--cy);outline-offset:2px;border-radius:2px}
-.btbl tr.tot td{border-top:1px solid var(--grid);border-bottom:0;color:var(--muted);
-                font:600 11px var(--mono);letter-spacing:.04em}
-
-.rate{display:inline-flex;align-items:center;gap:7px;justify-content:flex-end;width:100%}
-.rate .bar{width:52px;height:5px;border-radius:3px;background:var(--grid);
-           overflow:hidden;flex:0 0 auto}
-.rate .bar i{display:block;height:100%;background:var(--cy);border-radius:3px}
-.rate .bar.full i{background:var(--good)}
-.rate .bar.none i{background:var(--crit)}
-.rate .pc{font:600 11.5px var(--mono);color:var(--ink-2);min-width:34px;text-align:right}
-
-.chip{font:700 9.5px var(--mono);text-transform:uppercase;letter-spacing:.07em;
-      border-radius:5px;padding:2px 7px;white-space:nowrap;border:1px solid;
-      display:inline-block}
-.chip.gap{background:rgba(255,93,93,.12);color:var(--crit);border-color:rgba(255,93,93,.4)}
-.chip.hyg{background:rgba(245,184,61,.1);color:var(--warn);border-color:rgba(245,184,61,.4)}
-.chip.ok{background:rgba(61,220,151,.1);color:var(--good);border-color:rgba(61,220,151,.4)}
-.chip.na{background:rgba(123,137,160,.12);color:var(--muted);border-color:rgba(123,137,160,.4)}
-
-.note{color:var(--ink-2);font:13px/1.7 var(--disp);background:var(--panel);
-      border:1px solid var(--hair);border-radius:12px;padding:12px 16px;max-width:74ch}
-.note b{color:var(--ink)}
-.note.q{border-left:3px solid var(--vi)}
-.note.w{border-left:3px solid var(--warn)}
-
-.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:11px;align-items:start}
-.stack{display:flex;flex-direction:column;gap:11px}
-.legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:10px;
-        color:var(--ink-2);font:600 11px var(--mono)}
-.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;
-          margin-right:6px;vertical-align:-1px}
-
-footer{margin-top:46px;padding-top:16px;border-top:1px solid var(--grid);
-       color:var(--muted);font:11.5px/1.75 var(--disp);max-width:78ch}
-footer b{color:var(--ink-2)}
-
-@media(max-width:820px){
-  .bkpis{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .two{grid-template-columns:minmax(0,1fr)}
-  .wrap{padding:26px 16px 48px}
-  h1{font-size:21px}
+:root{
+  color-scheme:light;
+  /* Spectrum 2 gray ramp — light */
+  --g50:#ffffff; --g75:#fdfdfd; --g100:#f8f8f8; --g200:#e6e6e6; --g300:#d5d5d5;
+  --g400:#b1b1b1; --g500:#909090; --g600:#6d6d6d; --g700:#464646; --g800:#222222;
+  --bg:#f8f8f8; --surface:#ffffff; --sunken:#f3f3f3; --raised:#ffffff;
+  --line:#e6e6e6;            /* decorative hairline */
+  --line-strong:#d5d5d5;
+  --line-ui:#6d6d6d;         /* borders that identify a control — 5.17:1 */
+  --ink:#222222;             /* 15.91:1 */
+  --ink-2:#464646;           /* 9.44:1  */
+  --ink-3:#6d6d6d;           /* 5.17:1  — the floor for text */
+  --ink-disabled:#909090;    /* 3.19:1  — placeholder ONLY, never text */
+  --accent:#3B63FB;          /* adobe.com CTA blue, 4.81:1 */
+  --accent-strong:#274DEA;   /* 6.30:1 */
+  --accent-wash:rgba(59,99,251,.09);
+  --adobe-red:#EB1000;       /* identity mark only, exactly as Adobe uses it */
+  --negative:#d31510; --negative-icon:#ea3829; --negative-wash:rgba(211,21,16,.09);
+  --positive:#007a4d; --positive-icon:#15a46e; --positive-wash:rgba(0,122,77,.10);
+  --notice:#b14c00;   --notice-icon:#e46f00;   --notice-wash:rgba(177,76,0,.10);
+  --viz-1:#147af3; --viz-2:#e46f00; --viz-3:#15a46e; --viz-4:#d135c0;
+  --viz-neutral:#909090;
+  --focus:#147af3;
+  --shadow-1:0 1px 3px rgba(0,0,0,.04);
+  --shadow-2:0 4px 12px rgba(0,0,0,.08),0 2px 6px rgba(0,0,0,.04),0 0 2px rgba(0,0,0,.12);
+  --sans:"Source Sans 3","Source Sans Pro",-apple-system,BlinkMacSystemFont,
+         "Segoe UI",Roboto,Ubuntu,"Trebuchet MS","Lucida Grande",sans-serif;
+  --mono:"Source Code Pro",Monaco,ui-monospace,SFMono-Regular,monospace;
+  --r-sm:4px; --r-md:8px; --r-lg:16px;
 }
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    /* Spectrum 2 gray ramp — darkest */
+    --g50:#000000; --g75:#0e0e0e; --g100:#1d1d1d; --g200:#303030; --g300:#4b4b4b;
+    --g400:#6a6a6a; --g500:#8d8d8d; --g600:#b0b0b0; --g700:#d0d0d0; --g800:#ebebeb;
+    --bg:#0e0e0e; --surface:#1d1d1d; --sunken:#161616; --raised:#252525;
+    --line:#303030; --line-strong:#4b4b4b; --line-ui:#8d8d8d;
+    --ink:#ffffff; --ink-2:#d0d0d0; --ink-3:#b0b0b0; --ink-disabled:#6a6a6a;
+    --accent:#5eaaf7; --accent-strong:#98cefd; --accent-wash:rgba(94,170,247,.14);
+    --adobe-red:#ff816b;
+    --negative:#ff816b; --negative-icon:#ff816b; --negative-wash:rgba(255,129,107,.14);
+    --positive:#2fb880; --positive-icon:#2fb880; --positive-wash:rgba(47,184,128,.14);
+    --notice:#ffa037;   --notice-icon:#ffa037;   --notice-wash:rgba(255,160,55,.14);
+    --viz-1:#3892f3; --viz-2:#e46f00; --viz-3:#19a873; --viz-4:#d94ec4;
+    --viz-neutral:#8d8d8d;
+    --focus:#5eaaf7;
+    --shadow-1:0 1px 3px rgba(0,0,0,.24);
+    --shadow-2:0 4px 12px rgba(0,0,0,.34),0 2px 6px rgba(0,0,0,.18),0 0 2px rgba(0,0,0,.5);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --g50:#000000; --g75:#0e0e0e; --g100:#1d1d1d; --g200:#303030; --g300:#4b4b4b;
+  --g400:#6a6a6a; --g500:#8d8d8d; --g600:#b0b0b0; --g700:#d0d0d0; --g800:#ebebeb;
+  --bg:#0e0e0e; --surface:#1d1d1d; --sunken:#161616; --raised:#252525;
+  --line:#303030; --line-strong:#4b4b4b; --line-ui:#8d8d8d;
+  --ink:#ffffff; --ink-2:#d0d0d0; --ink-3:#b0b0b0; --ink-disabled:#6a6a6a;
+  --accent:#5eaaf7; --accent-strong:#98cefd; --accent-wash:rgba(94,170,247,.14);
+  --adobe-red:#ff816b;
+  --negative:#ff816b; --negative-icon:#ff816b; --negative-wash:rgba(255,129,107,.14);
+  --positive:#2fb880; --positive-icon:#2fb880; --positive-wash:rgba(47,184,128,.14);
+  --notice:#ffa037;   --notice-icon:#ffa037;   --notice-wash:rgba(255,160,55,.14);
+  --viz-1:#3892f3; --viz-2:#e46f00; --viz-3:#19a873; --viz-4:#d94ec4;
+  --viz-neutral:#8d8d8d;
+  --focus:#5eaaf7;
+  --shadow-1:0 1px 3px rgba(0,0,0,.24);
+  --shadow-2:0 4px 12px rgba(0,0,0,.34),0 2px 6px rgba(0,0,0,.18),0 0 2px rgba(0,0,0,.5);
+}
 
-/* print flips the tokens back to light for the handout */
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+     font:400 14px/1.5 var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px 72px}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:2px}
+
+a.skip{position:absolute;left:-9999px;top:8px;z-index:20;background:var(--surface);
+  color:var(--accent);border:1px solid var(--accent);border-radius:var(--r-sm);
+  padding:10px 16px;font-weight:700;text-decoration:none}
+a.skip:focus{left:24px}
+
+/* ---------- header ---------- */
+header{display:flex;gap:16px;align-items:center;padding:28px 0 20px}
+.mark{flex:0 0 auto;width:48px;height:48px;border-radius:var(--r-md);
+  background:var(--adobe-red);color:#fff;display:flex;align-items:center;
+  justify-content:center;font:800 17px/1 var(--sans);letter-spacing:.02em}
+:root[data-theme="dark"] .mark,
+:root:not([data-theme="light"]) .mark{color:#1d1d1d}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .mark{color:#fff}}
+.hd{min-width:0;flex:1}
+h1{margin:0;font:800 28px/1.15 var(--sans);letter-spacing:-.01em;color:var(--ink);
+   text-wrap:balance}
+.sub{margin-top:5px;color:var(--ink-3);font:400 13px/1.5 var(--mono)}
+.sub b{color:var(--ink-2);font-weight:600}
+
+.stale{background:var(--notice-wash);border:1px solid var(--notice);
+  border-radius:var(--r-md);padding:12px 16px;margin-bottom:20px;color:var(--ink-2)}
+.stale b{display:block;color:var(--notice);font-weight:700;margin-bottom:2px}
+
+/* ---------- tabs ---------- */
+nav.tabs{position:sticky;top:0;z-index:10;display:flex;gap:2px;flex-wrap:wrap;
+  background:var(--bg);border-bottom:1px solid var(--line-strong);
+  margin-bottom:24px;padding-top:2px}
+.tab{appearance:none;background:none;border:0;border-bottom:2px solid transparent;
+  margin-bottom:-1px;padding:11px 16px;cursor:pointer;color:var(--ink-3);
+  font:600 14px/1.3 var(--sans);white-space:nowrap;border-radius:var(--r-sm) var(--r-sm) 0 0}
+.tab:hover{color:var(--ink);background:var(--accent-wash)}
+.tab[aria-selected="true"]{color:var(--accent-strong);border-bottom-color:var(--accent);
+  font-weight:700}
+.tab .cnt{margin-left:7px;font:600 11px/1 var(--mono);color:var(--ink-3);
+  background:var(--sunken);border:1px solid var(--line);border-radius:999px;
+  padding:3px 7px;vertical-align:1px}
+.tab[aria-selected="true"] .cnt{color:var(--accent-strong);background:var(--accent-wash);
+  border-color:transparent}
+
+.panel[hidden]{display:none}
+.panel:focus{outline:none}
+h2{margin:32px 0 12px;font:700 20px/1.25 var(--sans);color:var(--ink);letter-spacing:-.005em}
+.panel > h2:first-child{margin-top:4px}
+h3{margin:0 0 10px;font:700 15px/1.3 var(--sans);color:var(--ink)}
+.lede{margin:0 0 20px;color:var(--ink-2);font-size:15px;line-height:1.6;max-width:70ch}
+.eyebrow{font:700 11px/1 var(--sans);letter-spacing:.06em;text-transform:uppercase;
+  color:var(--ink-3);margin-bottom:8px}
+
+/* ---------- KPI tiles ---------- */
+.kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-bottom:8px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);
+  padding:16px 18px;box-shadow:var(--shadow-1);min-width:0}
+.kpi .v{font:800 30px/1.1 var(--sans);color:var(--ink);font-variant-numeric:tabular-nums;
+  letter-spacing:-.02em}
+.kpi .v small{font:700 16px/1 var(--sans);color:var(--ink-3);letter-spacing:0}
+.kpi .l{margin-top:6px;font:700 11px/1.3 var(--sans);letter-spacing:.06em;
+  text-transform:uppercase;color:var(--ink-3)}
+.kpi .s{margin-top:10px;padding-top:9px;border-top:1px solid var(--line);
+  font:400 11px/1.45 var(--mono);color:var(--ink-3)}
+.kpi.lead{border-color:var(--accent);box-shadow:var(--shadow-2)}
+.kpi.lead .v{color:var(--accent-strong)}
+
+/* ---------- cards, callouts, charts ---------- */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);
+  padding:18px;box-shadow:var(--shadow-1)}
+.callout{background:var(--surface);border:1px solid var(--line);
+  border-left:3px solid var(--accent);border-radius:var(--r-md);padding:14px 18px;
+  color:var(--ink-2);font-size:14.5px;line-height:1.6;max-width:80ch}
+.callout b{color:var(--ink)}
+.callout.warn{border-left-color:var(--notice)}
+.callout.crit{border-left-color:var(--negative)}
+.callout .big{display:block;font:800 21px/1.2 var(--sans);color:var(--ink);
+  margin-bottom:5px;letter-spacing:-.01em}
+
+.chart{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);
+  padding:20px 20px 14px;box-shadow:var(--shadow-1)}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.chart .cap{margin-top:14px;padding-top:11px;border-top:1px solid var(--line);
+  color:var(--ink-3);font:400 12px/1.55 var(--sans)}
+text{font:600 12px var(--sans);fill:var(--ink-2)}
+text.nm{fill:var(--ink);font:700 13px var(--sans)}
+text.val{fill:var(--ink-2);font-variant-numeric:tabular-nums}
+text.zero{fill:var(--ink-3);font-weight:400}
+.bar-g rect.bar{transition:opacity .12s ease}
+.bar-g:hover rect.bar{opacity:.82}
+.legend{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:14px;
+  color:var(--ink-2);font:600 12px var(--sans)}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;
+  margin-right:7px;vertical-align:-1px}
+
+/* ---------- toolbar: search + chips ---------- */
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 14px}
+.search{position:relative;flex:0 1 300px;min-width:200px}
+.search input{width:100%;padding:8px 30px 8px 12px;font:400 14px var(--sans);
+  color:var(--ink);background:var(--surface);border:1px solid var(--line-ui);
+  border-radius:var(--r-sm)}
+.search input::placeholder{color:var(--ink-disabled)}
+.search .clr{position:absolute;right:4px;top:50%;transform:translateY(-50%);
+  appearance:none;background:none;border:0;cursor:pointer;color:var(--ink-3);
+  font:400 17px/1 var(--sans);padding:3px 7px;border-radius:var(--r-sm)}
+.search .clr:hover{color:var(--ink);background:var(--sunken)}
+.chip{appearance:none;cursor:pointer;background:var(--surface);color:var(--ink-2);
+  border:1px solid var(--line-strong);border-radius:999px;padding:6px 13px;
+  font:600 12.5px/1.2 var(--sans);white-space:nowrap}
+.chip:hover{border-color:var(--ink-3);color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+:root[data-theme="dark"] .chip[aria-pressed="true"]{color:#0e0e0e}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .chip[aria-pressed="true"]{color:#0e0e0e}}
+.chipset{display:flex;flex-wrap:wrap;gap:7px;align-items:center}
+.chipset .lbl{font:700 11px/1 var(--sans);letter-spacing:.06em;text-transform:uppercase;
+  color:var(--ink-3);margin-right:2px}
+.count{font:400 13px var(--mono);color:var(--ink-3);margin-left:auto;white-space:nowrap}
+.count b{color:var(--ink);font-weight:700}
+
+/* ---------- tables ---------- */
+.tw{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);
+  overflow-x:auto;box-shadow:var(--shadow-1)}
+table{width:100%;border-collapse:collapse;font-size:13.5px;
+  font-variant-numeric:tabular-nums}
+caption{text-align:left;padding:14px 18px 0;font:700 15px/1.3 var(--sans);color:var(--ink)}
+th{text-align:left;padding:11px 16px;font:700 11px/1.3 var(--sans);letter-spacing:.06em;
+  text-transform:uppercase;color:var(--ink-3);border-bottom:1px solid var(--line-strong);
+  white-space:nowrap;background:var(--surface)}
+td{padding:10px 16px;border-bottom:1px solid var(--line);color:var(--ink-2);
+   vertical-align:middle}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover td{background:var(--sunken)}
+td.nm{color:var(--ink);font-weight:600}
+th.num,td.num{text-align:right}
+tr.tot td{border-top:1px solid var(--line-strong);border-bottom:0;background:var(--sunken);
+  color:var(--ink-2);font-weight:700}
+th[aria-sort]{cursor:pointer;user-select:none}
+th[aria-sort]:hover{color:var(--ink)}
+th[aria-sort] .ar{opacity:0;margin-left:5px;font-size:10px}
+th[aria-sort="ascending"] .ar,th[aria-sort="descending"] .ar{opacity:1;color:var(--accent)}
+th[aria-sort="descending"] .ar{display:inline-block;transform:rotate(180deg)}
+table a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line-strong)}
+table a:hover{color:var(--accent-strong);border-bottom-color:var(--accent)}
+tr[hidden]{display:none}
+
+/* ---------- expandable account lists ---------- */
+details.acc{border-bottom:1px solid var(--line)}
+details.acc:last-of-type{border-bottom:0}
+details.acc > summary{list-style:none;cursor:pointer;display:grid;
+  grid-template-columns:1.6fr .7fr .7fr 1fr .9fr;gap:12px;align-items:center;
+  padding:12px 16px;color:var(--ink-2);font-size:13.5px}
+details.acc > summary::-webkit-details-marker{display:none}
+details.acc > summary:hover{background:var(--sunken)}
+details.acc > summary .nm{color:var(--ink);font-weight:600;display:flex;
+  align-items:center;gap:9px;min-width:0}
+details.acc > summary .tw2{flex:0 0 auto;width:15px;height:15px;color:var(--ink-3);
+  transition:transform .15s ease}
+details.acc[open] > summary .tw2{transform:rotate(90deg);color:var(--accent)}
+details.acc[open] > summary{background:var(--accent-wash)}
+details.acc .inner{padding:0 16px 16px;background:var(--sunken)}
+details.acc .inner table{font-size:13px;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden}
+details.acc .inner th{padding:8px 12px;font-size:10px;background:var(--surface)}
+details.acc .inner td{padding:7px 12px}
+.acchead{display:grid;grid-template-columns:1.6fr .7fr .7fr 1fr .9fr;gap:12px;
+  padding:10px 16px;border-bottom:1px solid var(--line-strong);
+  font:700 11px/1.3 var(--sans);letter-spacing:.06em;text-transform:uppercase;
+  color:var(--ink-3)}
+
+/* ---------- pills, rates ---------- */
+.pill{display:inline-block;padding:3px 9px;border-radius:999px;border:1px solid;
+  font:700 10.5px/1.4 var(--sans);letter-spacing:.04em;text-transform:uppercase;
+  white-space:nowrap}
+.pill.ok{color:var(--positive);border-color:var(--positive);background:var(--positive-wash)}
+.pill.gap{color:var(--negative);border-color:var(--negative);background:var(--negative-wash)}
+.pill.hyg{color:var(--notice);border-color:var(--notice);background:var(--notice-wash)}
+.pill.na{color:var(--ink-3);border-color:var(--line-strong);background:var(--sunken)}
+.stagedot{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:7px;
+  vertical-align:-1px;flex:0 0 auto}
+
+.rate{display:inline-flex;align-items:center;gap:9px;justify-content:flex-end;width:100%}
+.rate .track{width:58px;height:6px;border-radius:3px;background:var(--g200);
+  overflow:hidden;flex:0 0 auto}
+:root[data-theme="dark"] .rate .track{background:var(--g300)}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .rate .track{background:var(--g300)}}
+.rate .track i{display:block;height:100%;background:var(--accent);border-radius:3px}
+.rate .track.full i{background:var(--positive-icon)}
+.rate .track.none i{background:var(--negative-icon)}
+.rate .pc{font:700 12.5px var(--mono);color:var(--ink-2);min-width:36px;text-align:right}
+
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;
+  align-items:start}
+.stack{display:flex;flex-direction:column;gap:16px}
+.empty{padding:26px 18px;text-align:center;color:var(--ink-3);font-size:14px}
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+
+footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--line-strong);
+  color:var(--ink-3);font-size:12.5px;line-height:1.7;max-width:88ch}
+footer b{color:var(--ink-2)}
+footer p{margin:0 0 12px}
+
+/* ---------- responsive ---------- */
+@media (max-width:1080px){
+  .kpis{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (max-width:860px){
+  .grid2{grid-template-columns:minmax(0,1fr)}
+  details.acc > summary,.acchead{grid-template-columns:1.4fr .8fr .8fr}
+  details.acc > summary .h4,details.acc > summary .h5,
+  .acchead .h4,.acchead .h5{display:none}
+}
+@media (max-width:640px){
+  .wrap{padding:0 14px 48px}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  h1{font-size:22px}
+  .kpi .v{font-size:25px}
+  nav.tabs{gap:0}
+  .tab{padding:10px 11px;font-size:13px}
+  details.acc > summary,.acchead{grid-template-columns:1.5fr .9fr}
+  details.acc > summary .h3c,.acchead .h3c{display:none}
+  .count{margin-left:0;width:100%}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
+@media (forced-colors:active){
+  .kpi,.card,.callout,.chart,.tw,.chip,.tab,.pill,.search input{border:1px solid CanvasText}
+  .tab[aria-selected="true"],.chip[aria-pressed="true"]{outline:2px solid Highlight}
+  .rate .track i{background:Highlight}
+}
+
+/* ---------- print: no tabs, every panel on the page ---------- */
 @media print{
   :root{color-scheme:light;
-    --void:#fff; --panel:#fff; --raise:#f2f5fa;
-    --ink:#1c2433; --ink-2:#3a4557; --muted:#5a6678;
-    --grid:#c9d2e0; --hair:#d7deea; --hover:#f2f5fa;
-    --cy:#0e7a8a; --vi:#6a4fc8;
-    --good:#20713a; --warn:#8a6410; --crit:#b8322f;
-    --s1:#0f8fa3; --s2:#6a4fc8; --s3:#8a6410; --s4:#a8305d}
+    --bg:#fff; --surface:#fff; --sunken:#fff; --raised:#fff;
+    --line:#d5d5d5; --line-strong:#b1b1b1; --line-ui:#6d6d6d;
+    --ink:#000; --ink-2:#333; --ink-3:#555;
+    --shadow-1:none; --shadow-2:none}
   body{background:#fff}
-  .chart,.tblwrap,.note,.bkpi,.stalebanner{border-color:#c9d2e0}
-  h2{margin-top:22px}
-  .btbl a{color:#1c2433;border-bottom:0}
-  section{break-inside:avoid}
+  nav.tabs,.toolbar,a.skip{display:none!important}
+  .panel[hidden]{display:block!important}
+  .panel{break-before:page}
+  .panel:first-of-type{break-before:auto}
+  details.acc{break-inside:avoid}
+  details.acc > .inner{display:block!important}
+  .kpi,.card,.callout,.chart,.tw{box-shadow:none;border:1px solid #d5d5d5}
+  h2{margin-top:18px}
+  table a{border-bottom:0;color:#000}
 }
-@page{margin:1.5cm}
+@page{margin:1.4cm}
 </style>
+<noscript><style>.panel[hidden]{display:block!important}nav.tabs,.toolbar{display:none!important}.panel{border-top:1px solid var(--line-strong);padding-top:8px;margin-top:28px}.panel:first-of-type{border-top:0;margin-top:0}</style></noscript>
+<a class="skip" href="#panel-overview">Skip to dashboard</a>
 <div class="wrap">
-<header><div class="tile" aria-hidden="true">OB</div><div class="hd"><h1>ABV <b>OB In Progress</b></h1><div class="sub">Beth King · Daniel Angol · FY26 Onboarding Board · generated Wed 9 Sep 2026 · 1:27 PM EDT</div></div></header>
-<p class="lede">Every ABV account the onboarding team is carrying, across all consultants — read straight off the board group “ABV Onboarding In Progress”, with no person filter.</p>
-<div class="bkpis">
-<div class="bkpi" title="board group group_mm6c6h21, live count"><div class="v">57</div><div class="l">In the ABV pipeline</div><div class="s">board group group_mm6c6h21, live count</div></div>
-<div class="bkpi" title="Stage = Not Started (color_mkyrdx3)"><div class="v">29</div><div class="l">Not Started</div><div class="s">Stage = Not Started (color_mkyrdx3)</div></div>
-<div class="bkpi" title="every stage except Not Started"><div class="v">28</div><div class="l">In progress</div><div class="s">every stage except Not Started</div></div>
-<div class="bkpi" title="AOE Assigned ticked (boolean_mm71c8h0)"><div class="v">41<small> / 57</small></div><div class="l">AOE Assigned</div><div class="s">AOE Assigned ticked (boolean_mm71c8h0)</div></div>
+<header><div class="mark" aria-hidden="true">ABV</div><div class="hd"><h1>ABV OB In Progress</h1><div class="sub">Beth King · Daniel Angol · <b>FY26 Onboarding Board</b> · generated Wed 9 Sep 2026 · 1:27 PM EDT</div></div></header>
+<nav class="tabs" role="tablist" aria-label="Dashboard sections"><button class="tab" type="button" role="tab" id="tab-overview" aria-controls="panel-overview" aria-selected="true" tabindex="0">Overview</button><button class="tab" type="button" role="tab" id="tab-aoe" aria-controls="panel-aoe" aria-selected="false" tabindex="-1">AOE Coverage<span class="cnt">16</span></button><button class="tab" type="button" role="tab" id="tab-team" aria-controls="panel-team" aria-selected="false" tabindex="-1">Team<span class="cnt">14</span></button><button class="tab" type="button" role="tab" id="tab-aging" aria-controls="panel-aging" aria-selected="false" tabindex="-1">Aging</button><button class="tab" type="button" role="tab" id="tab-data" aria-controls="panel-data" aria-selected="false" tabindex="-1">Completed &amp; Data</button></nav>
+<main>
+<section class="panel" id="panel-overview" role="tabpanel" aria-labelledby="tab-overview" tabindex="-1">
+<p class="lede">Every ABV account the onboarding team is carrying, across all 13 consultants — read straight off the board group “ABV Onboarding In Progress”, with no person filter.</p>
+<div class="kpis">
+<div class="kpi"><div class="v">57</div><div class="l">In the ABV pipeline</div><div class="s">board group group_mm6c6h21, live count</div></div>
+<div class="kpi"><div class="v">29</div><div class="l">Not Started</div><div class="s">Stage = Not Started (color_mkyrdx3)</div></div>
+<div class="kpi"><div class="v">28</div><div class="l">In progress</div><div class="s">every stage except Not Started</div></div>
+<div class="kpi"><div class="v">41<small> / 57</small></div><div class="l">AOE Assigned</div><div class="s">AOE Assigned ticked (boolean_mm71c8h0)</div></div>
+<div class="kpi lead"><div class="v">$229,663</div><div class="l">Pipeline MRR</div><div class="s">sum of MRR (numeric_mkyr2fx) over 45 accounts</div></div>
 </div>
-<section><h2>Where the in-progress work sits <span class="n">28 accounts</span></h2>
-<div class="chart"><svg viewBox="0 0 800 189" role="img" aria-label="Accounts at each in-progress stage: Discovery 12, Enablement 6, Adoption 5, Launch 5, Risk 0"><text class="nm" x="0" y="20">Discovery</text><rect x="116" y="2" width="488" height="26" rx="4" fill="var(--s1)"/><text class="val" x="614" y="20">12 accounts · 21% of book</text><text class="nm" x="0" y="57">Enablement</text><rect x="116" y="39" width="244" height="26" rx="4" fill="var(--s2)"/><text class="val" x="370" y="57">6 accounts · 11% of book</text><text class="nm" x="0" y="94">Adoption</text><rect x="116" y="76" width="203" height="26" rx="4" fill="var(--s3)"/><text class="val" x="329" y="94">5 accounts · 9% of book</text><text class="nm" x="0" y="131">Launch</text><rect x="116" y="113" width="203" height="26" rx="4" fill="var(--s4)"/><text class="val" x="329" y="131">5 accounts · 9% of book</text><text class="nm" x="0" y="168">⚠ Risk</text><rect x="116" y="150" width="4" height="26" rx="2" fill="var(--grid)"/><text class="zero" x="130" y="168">none at this stage</text></svg><div class="legend"><span><i style="background:var(--s1)"></i>Discovery</span><span><i style="background:var(--s2)"></i>Enablement</span><span><i style="background:var(--s3)"></i>Adoption</span><span><i style="background:var(--s4)"></i>Launch</span><span><i style="background:var(--crit)"></i>⚠ Risk</span></div><div class="cap">The 28 accounts already moving. Not Started (29) is counted separately above — it is a different question. Share is of all 57 ABV accounts in the pipeline.</div></div>
-</section>
-<section><h2>AOE Assigned <span class="n">41 of 57 · 72%</span></h2>
-<div class="note q"><b>16 ABV accounts have no AOE assigned.</b> 10 of those 16 sit in Not Started — the gap is concentrated at the front of the pipeline, before onboarding has begun.</div>
-<div class="two" style="margin-top:11px">
-<div class="tblwrap"><table class="btbl"><thead><tr><th>Stage</th><th class="num">Assigned</th><th class="num">Total</th><th class="num">Rate</th></tr></thead><tbody>
-<tr><td class="nm">Not Started</td><td class="num">19</td><td class="num">29</td><td class="num"><span class="rate"><span class="bar"><i style="width:66%"></i></span><span class="pc">66%</span></span></td></tr>
-<tr><td class="nm">Discovery</td><td class="num">8</td><td class="num">12</td><td class="num"><span class="rate"><span class="bar"><i style="width:67%"></i></span><span class="pc">67%</span></span></td></tr>
-<tr><td class="nm">Enablement</td><td class="num">5</td><td class="num">6</td><td class="num"><span class="rate"><span class="bar"><i style="width:83%"></i></span><span class="pc">83%</span></span></td></tr>
-<tr><td class="nm">Adoption</td><td class="num">5</td><td class="num">5</td><td class="num"><span class="rate"><span class="bar full"><i style="width:100%"></i></span><span class="pc">100%</span></span></td></tr>
-<tr><td class="nm">Launch</td><td class="num">4</td><td class="num">5</td><td class="num"><span class="rate"><span class="bar"><i style="width:80%"></i></span><span class="pc">80%</span></span></td></tr>
-<tr><td class="nm">⚠ Risk</td><td class="num">—</td><td class="num">0</td><td class="num"><span class="chip na">none</span></td></tr>
-<tr class="tot"><td>All stages</td><td class="num">41</td><td class="num">57</td><td class="num">72%</td></tr>
-</tbody></table></div>
-<div class="tblwrap"><table class="btbl"><thead><tr><th>Consultant</th><th class="num">Assigned</th><th class="num">Total</th><th class="num">Rate</th></tr></thead><tbody>
-<tr><td class="nm">Rich Bryant</td><td class="num">6</td><td class="num">8</td><td class="num"><span class="rate"><span class="bar"><i style="width:75%"></i></span><span class="pc">75%</span></span></td></tr>
-<tr><td class="nm">Gary McGowan</td><td class="num">3</td><td class="num">6</td><td class="num"><span class="rate"><span class="bar"><i style="width:50%"></i></span><span class="pc">50%</span></span></td></tr>
-<tr><td class="nm">Daniel Hemhauser</td><td class="num">5</td><td class="num">6</td><td class="num"><span class="rate"><span class="bar"><i style="width:83%"></i></span><span class="pc">83%</span></span></td></tr>
-<tr><td class="nm">Craig Walker</td><td class="num">3</td><td class="num">5</td><td class="num"><span class="rate"><span class="bar"><i style="width:60%"></i></span><span class="pc">60%</span></span></td></tr>
-<tr><td class="nm">Brian Psota</td><td class="num">4</td><td class="num">5</td><td class="num"><span class="rate"><span class="bar"><i style="width:80%"></i></span><span class="pc">80%</span></span></td></tr>
-<tr><td class="nm">Andrew Coe</td><td class="num">2</td><td class="num">4</td><td class="num"><span class="rate"><span class="bar"><i style="width:50%"></i></span><span class="pc">50%</span></span></td></tr>
-<tr><td class="nm">Kat Giorgio</td><td class="num">2</td><td class="num">4</td><td class="num"><span class="rate"><span class="bar"><i style="width:50%"></i></span><span class="pc">50%</span></span></td></tr>
-<tr><td class="nm">Matthew Peck</td><td class="num">4</td><td class="num">4</td><td class="num"><span class="rate"><span class="bar full"><i style="width:100%"></i></span><span class="pc">100%</span></span></td></tr>
-<tr><td class="nm">David Bushrod</td><td class="num">2</td><td class="num">3</td><td class="num"><span class="rate"><span class="bar"><i style="width:67%"></i></span><span class="pc">67%</span></span></td></tr>
-<tr><td class="nm">Ricardo Loureiro Vasquez</td><td class="num">2</td><td class="num">3</td><td class="num"><span class="rate"><span class="bar"><i style="width:67%"></i></span><span class="pc">67%</span></span></td></tr>
-<tr><td class="nm">Kasra Zadkhorvash</td><td class="num">3</td><td class="num">3</td><td class="num"><span class="rate"><span class="bar full"><i style="width:100%"></i></span><span class="pc">100%</span></span></td></tr>
-<tr><td class="nm">Roman Pchelintsev</td><td class="num">3</td><td class="num">3</td><td class="num"><span class="rate"><span class="bar full"><i style="width:100%"></i></span><span class="pc">100%</span></span></td></tr>
-<tr><td class="nm">Camille de Laitre</td><td class="num">2</td><td class="num">2</td><td class="num"><span class="rate"><span class="bar full"><i style="width:100%"></i></span><span class="pc">100%</span></span></td></tr>
-<tr><td class="nm"><span class="chip na">Unassigned</span></td><td class="num">0</td><td class="num">1</td><td class="num"><span class="rate"><span class="bar none"><i style="width:0%"></i></span><span class="pc">0%</span></span></td></tr>
-<tr class="tot"><td>14 consultants</td><td class="num">41</td><td class="num">57</td><td class="num">72%</td></tr>
-</tbody></table></div></div>
-<h2 style="margin-top:26px">AOE not assigned <span class="n">16 accounts</span></h2>
-<div class="tblwrap"><table class="btbl"><thead><tr><th>Account</th><th>Stage</th><th>Consultant</th><th class="num">Days open</th></tr></thead><tbody>
-<tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12671801902">Mariner Wealth Advisors</a></td><td>Not Started</td><td>Daniel Hemhauser</td><td class="num">43</td></tr>
-<tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12706054823">Chevron Technical Center (LLMO)</a></td><td>Not Started</td><td>Craig Walker</td><td class="num">40</td></tr>
-<tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12978708972">Systeme U</a></td><td>Not Started</td><td>David Bushrod</td><td class="num">27</td></tr>
-<tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12995969373">Los Angeles Clippers</a></td><td>Not Started</td><td>Brian Psota</td><td class="num">24</td></tr>
-<tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12978249737">The Azek Group</a></td><td>Not Started</td><td>Andrew Coe</td><td class="num">9</td></tr>
-<tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12971508731">Glidewell Dental</a></td><td>Not Started</td><td>Craig Walker</td><td class="num">7</td></tr>
-<tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12976799962">Jet2</a></td><td>Not Started</td><td>Rich Bryant</td><td class="num">7</td></tr>
-<tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12894059010">Bridgestone</a></td><td>Not Started</td><td>Gary McGowan</td><td class="num">—</td></tr>
-<tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12978770816">Informa Global</a></td><td>Not Started</td><td>Unassigned</td><td class="num">—</td></tr>
-<tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12978879134">Masco</a></td><td>Not Started</td><td>Andrew Coe</td><td class="num">—</td></tr>
-<tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12705790834">BJ's Restaurants, Inc. - ADOBE LLMO</a></td><td>Discovery</td><td>Ricardo Loureiro Vasquez</td><td class="num">41</td></tr>
-<tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12676271205">Innocean Hyundai Canada</a></td><td>Discovery</td><td>Kat Giorgio</td><td class="num">38</td></tr>
-<tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12978876557">Cloudera</a></td><td>Discovery</td><td>Kat Giorgio</td><td class="num">13</td></tr>
-<tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12721196387">The New Zealand Automobile Association</a></td><td>Discovery</td><td>Gary McGowan</td><td class="num">9</td></tr>
-<tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12730848237">Prudential via Leo Burnett (Publicis HK)</a></td><td>Enablement</td><td>Gary McGowan</td><td class="num">45</td></tr>
-<tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12345993339">Unicatt</a></td><td>Launch</td><td>Rich Bryant</td><td class="num">85</td></tr>
-</tbody></table></div>
-</section>
-<section><h2>Consultant load <span class="n">14 rows · 57 accounts</span></h2>
-<div class="tblwrap"><table class="btbl"><thead><tr><th>Consultant</th><th class="num">Accounts</th><th class="num">Not Started</th><th class="num">In progress</th><th class="num">AOE</th><th class="num">Oldest</th></tr></thead><tbody>
-<tr><td class="nm">Rich Bryant</td><td class="num">8</td><td class="num">2</td><td class="num">6</td><td class="num"><span class="rate"><span class="bar"><i style="width:75%"></i></span><span class="pc">75%</span></span></td><td class="num">85d</td></tr>
-<tr><td class="nm">Gary McGowan</td><td class="num">6</td><td class="num">1</td><td class="num">5</td><td class="num"><span class="rate"><span class="bar"><i style="width:50%"></i></span><span class="pc">50%</span></span></td><td class="num">45d</td></tr>
-<tr><td class="nm">Daniel Hemhauser</td><td class="num">6</td><td class="num">2</td><td class="num">4</td><td class="num"><span class="rate"><span class="bar"><i style="width:83%"></i></span><span class="pc">83%</span></span></td><td class="num">43d</td></tr>
-<tr><td class="nm">Craig Walker</td><td class="num">5</td><td class="num">5</td><td class="num">0</td><td class="num"><span class="rate"><span class="bar"><i style="width:60%"></i></span><span class="pc">60%</span></span></td><td class="num">41d</td></tr>
-<tr><td class="nm">Brian Psota</td><td class="num">5</td><td class="num">3</td><td class="num">2</td><td class="num"><span class="rate"><span class="bar"><i style="width:80%"></i></span><span class="pc">80%</span></span></td><td class="num">40d</td></tr>
-<tr><td class="nm">Andrew Coe</td><td class="num">4</td><td class="num">4</td><td class="num">0</td><td class="num"><span class="rate"><span class="bar"><i style="width:50%"></i></span><span class="pc">50%</span></span></td><td class="num">9d</td></tr>
-<tr><td class="nm">Kat Giorgio</td><td class="num">4</td><td class="num">2</td><td class="num">2</td><td class="num"><span class="rate"><span class="bar"><i style="width:50%"></i></span><span class="pc">50%</span></span></td><td class="num">38d</td></tr>
-<tr><td class="nm">Matthew Peck</td><td class="num">4</td><td class="num">2</td><td class="num">2</td><td class="num"><span class="rate"><span class="bar full"><i style="width:100%"></i></span><span class="pc">100%</span></span></td><td class="num">41d</td></tr>
-<tr><td class="nm">David Bushrod</td><td class="num">3</td><td class="num">2</td><td class="num">1</td><td class="num"><span class="rate"><span class="bar"><i style="width:67%"></i></span><span class="pc">67%</span></span></td><td class="num">41d</td></tr>
-<tr><td class="nm">Ricardo Loureiro Vasquez</td><td class="num">3</td><td class="num">1</td><td class="num">2</td><td class="num"><span class="rate"><span class="bar"><i style="width:67%"></i></span><span class="pc">67%</span></span></td><td class="num">41d</td></tr>
-<tr><td class="nm">Kasra Zadkhorvash</td><td class="num">3</td><td class="num">2</td><td class="num">1</td><td class="num"><span class="rate"><span class="bar full"><i style="width:100%"></i></span><span class="pc">100%</span></span></td><td class="num">29d</td></tr>
-<tr><td class="nm">Roman Pchelintsev</td><td class="num">3</td><td class="num">1</td><td class="num">2</td><td class="num"><span class="rate"><span class="bar full"><i style="width:100%"></i></span><span class="pc">100%</span></span></td><td class="num">27d</td></tr>
-<tr><td class="nm">Camille de Laitre</td><td class="num">2</td><td class="num">1</td><td class="num">1</td><td class="num"><span class="rate"><span class="bar full"><i style="width:100%"></i></span><span class="pc">100%</span></span></td><td class="num">38d</td></tr>
-<tr><td class="nm"><span class="chip na">Unassigned</span></td><td class="num">1</td><td class="num">1</td><td class="num">0</td><td class="num"><span class="rate"><span class="bar none"><i style="width:0%"></i></span><span class="pc">0%</span></span></td><td class="num">—</td></tr>
-<tr class="tot"><td>Total</td><td class="num">57</td><td class="num">29</td><td class="num">28</td><td class="num">72%</td><td class="num"></td></tr>
-</tbody></table></div>
-<div class="note" style="margin-top:11px"><b>Oldest</b> is the highest Days Open in that consultant’s ABV book. Accounts with no Subscription Start have no clock and are excluded from it.</div>
-</section>
-<section><h2>How long these have been open</h2>
-<div class="note q">These accounts run on the <b>ABV program clock</b>. The onboarding board’s day-count target is written for standard onboarding and does not apply to them, so the buckets below are neutral — no target line, no pass or fail, nothing scored good or bad. Read them as distribution, not performance.</div>
-<div style="margin-top:11px"><div class="chart"><svg viewBox="0 0 800 246" role="img" aria-label="Days open across the ABV pipeline: 0–14 days 12, 15–30 days 16, 31–45 days 17, 46–60 days 1, 61+ days 3, No start date yet 7, Start date in the future 1"><text class="nm" x="0" y="18">0–14 days</text><rect x="178" y="2" width="354" height="22" rx="4" fill="var(--vi)"/><text class="val" x="542" y="18">12</text><text class="nm" x="0" y="50">15–30 days</text><rect x="178" y="34" width="472" height="22" rx="4" fill="var(--vi)"/><text class="val" x="660" y="50">16</text><text class="nm" x="0" y="82">31–45 days</text><rect x="178" y="66" width="502" height="22" rx="4" fill="var(--vi)"/><text class="val" x="690" y="82">17</text><text class="nm" x="0" y="114">46–60 days</text><rect x="178" y="98" width="30" height="22" rx="4" fill="var(--vi)"/><text class="val" x="218" y="114">1</text><text class="nm" x="0" y="146">61+ days</text><rect x="178" y="130" width="89" height="22" rx="4" fill="var(--vi)"/><text class="val" x="277" y="146">3</text><line x1="0" y1="166" x2="800" y2="166" stroke="var(--grid)" stroke-width="1"/><text class="nm" x="0" y="194" style="fill:var(--muted)">No start date yet</text><rect x="178" y="178" width="207" height="22" rx="4" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="3 3"/><text class="val" x="395" y="194">7</text><text class="nm" x="0" y="226" style="fill:var(--muted)">Start date in the future</text><rect x="178" y="210" width="30" height="22" rx="4" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="3 3"/><text class="val" x="218" y="226">1</text></svg><div class="cap">Board Days Open, counted from Subscription Start. All categories sum to 57. The two dashed rows have no clock running and are not placed on the day scale.</div></div></div>
-</section>
-<section><h2>Completed &amp; data gaps</h2><div class="two">
-<div class="stack">
-<div class="tblwrap"><table class="btbl"><thead><tr><th>ABV Onboarded</th><th>Consultant</th><th class="num">Days open</th><th>End date</th></tr></thead><tbody>
-<tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12474099345">Shangri-La Hotels &amp; Resorts</a></td><td>Camille de Laitre</td><td class="num">57</td><td><span class="chip hyg">missing</span></td></tr>
-<tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12667427449">PwC Japan</a></td><td>Camille de Laitre</td><td class="num">42</td><td><span class="chip hyg">missing</span></td></tr>
-<tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12635802684">TUI Group</a></td><td>David Bushrod</td><td class="num">19</td><td>2026-08-11</td></tr>
-</tbody></table></div>
-<div class="note w"><b>No cycle time can be read from this group.</b> 2 of the 3 onboarded accounts have no Onboarding End Date, so their Days Open is still counting (Shangri-La Hotels &amp; Resorts 57d, PwC Japan 42d) and the board’s TTV Outcome column stays blank. Treat this as a board-hygiene item, not as throughput.</div>
+<h2>What stands out today</h2><div class="stack">
+<div class="callout crit"><span class="big">$48,967 sits behind the 16 accounts with no AOE assigned.</span>10 of those 16 are still in Not Started, so the gap is concentrated at the front of the pipeline — before onboarding has begun.</div>
+<div class="callout warn"><span class="big">23 of 57 accounts carry no usable revenue figure.</span>12 have no MRR value at all and 11 are set to exactly $0, so the $229,663 pipeline total is a floor, not a full picture.</div>
+<div class="callout"><span class="big">7 accounts have no clock running.</span>Their Subscription Start is empty, so the board reports no age for them at all. They are shown as their own category throughout, never as day zero.</div>
 </div>
-<div class="tblwrap"><table class="btbl"><thead><tr><th>Gap in the in-progress group</th><th class="num">Accounts</th></tr></thead><tbody>
-<tr><td class="nm">No Subscription Start (no clock)<div style="font:11.5px/1.55 var(--mono);color:var(--muted);font-weight:400;margin-top:3px">Ancestry, Bridgestone, Dollar General, Informa Global, Interstate Battery, Masco, Tennis Australia</div></td><td class="num"><span class="chip hyg">7</span></td></tr>
-<tr><td class="nm">Start date in the future<div style="font:11.5px/1.55 var(--mono);color:var(--muted);font-weight:400;margin-top:3px">Trex Inc</div></td><td class="num"><span class="chip hyg">1</span></td></tr>
-<tr><td class="nm">No onboarding consultant<div style="font:11.5px/1.55 var(--mono);color:var(--muted);font-weight:400;margin-top:3px">Informa Global</div></td><td class="num"><span class="chip hyg">1</span></td></tr>
-<tr><td class="nm">No Region<div style="font:11.5px/1.55 var(--mono);color:var(--muted);font-weight:400;margin-top:3px">Informa Global, Masco, Tennis Australia</div></td><td class="num"><span class="chip hyg">3</span></td></tr>
-<tr><td class="nm">No Products Purchased<div style="font:11.5px/1.55 var(--mono);color:var(--muted);font-weight:400;margin-top:3px">Bridgestone, Informa Global, Masco, Tennis Australia</div></td><td class="num"><span class="chip hyg">4</span></td></tr>
-</tbody></table></div></div>
-<div class="note" style="margin-top:11px">Suggest-only. Nothing on this page is written back to Monday — the board stays the source of truth.</div>
+<h2>Where the in-progress work sits</h2>
+<div class="chart"><svg viewBox="0 0 820 214" role="img" aria-label="Accounts at each in-progress stage: Discovery 12, Enablement 6, Adoption 5, Launch 5, Risk 0"><text class="nm" x="0" y="23">Discovery</text><g class="bar-g"><rect class="bar" x="118" y="2" width="470" height="30" rx="4" fill="var(--viz-1)"><title>Discovery — 12 accounts, $53,477 MRR</title></rect></g><text class="val" x="600" y="23">12 accounts · $53,477</text><text class="nm" x="0" y="65">Enablement</text><g class="bar-g"><rect class="bar" x="118" y="44" width="235" height="30" rx="4" fill="var(--viz-2)"><title>Enablement — 6 accounts, $42,338 MRR</title></rect></g><text class="val" x="365" y="65">6 accounts · $42,338</text><text class="nm" x="0" y="107">Adoption</text><g class="bar-g"><rect class="bar" x="118" y="86" width="196" height="30" rx="4" fill="var(--viz-3)"><title>Adoption — 5 accounts, $20,205 MRR</title></rect></g><text class="val" x="326" y="107">5 accounts · $20,205</text><text class="nm" x="0" y="149">Launch</text><g class="bar-g"><rect class="bar" x="118" y="128" width="196" height="30" rx="4" fill="var(--viz-4)"><title>Launch — 5 accounts, $29,665 MRR</title></rect></g><text class="val" x="326" y="149">5 accounts · $29,665</text><text class="nm" x="0" y="191">⚠ Risk</text><rect x="118" y="170" width="5" height="30" rx="2" fill="var(--line-strong)"/><text class="zero" x="134" y="191">no accounts at this stage</text></svg><div class="legend"><span><i style="background:var(--viz-1)"></i>Discovery</span><span><i style="background:var(--viz-2)"></i>Enablement</span><span><i style="background:var(--viz-3)"></i>Adoption</span><span><i style="background:var(--viz-4)"></i>Launch</span><span><i style="background:var(--negative-icon)"></i>⚠ Risk</span></div><div class="cap">The 28 accounts already moving, and the revenue behind each stage. Not Started (29) is counted separately — it answers a different question. Risk is a board stage, not a judgement this page makes.</div></div>
+<h2>Risk flags</h2><div class="tw"><table><thead><tr><th scope="col">Account</th><th scope="col">Status</th><th scope="col">Type</th><th scope="col">Stage</th><th scope="col">Consultant</th></tr></thead><tbody>
+<tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12745828698">Wyndham</a></td><td><span class="pill gap">⚠ High</span></td><td>Sales</td><td>Working On It</td><td>Matthew Peck</td></tr>
+</tbody></table></div>
 </section>
-<section><h2>Risk flags <span class="n">1</span></h2>
-<div class="tblwrap"><table class="btbl"><thead><tr><th>Account</th><th>Status</th><th>Type</th><th>Stage</th><th>Consultant</th></tr></thead><tbody>
-<tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12745828698">Wyndham</a></td><td><span class="chip gap">High</span></td><td>Sales</td><td>Working On It</td><td>Matthew Peck</td></tr>
-</tbody></table></div></section>
-<footer><b>Where these numbers come from.</b> Two reads of board 18372591859 — group group_mm6c6h21 (57 accounts) and group group_mm6cwt2z (3 accounts) — with no person filter, so this is the whole team’s ABV book. Stage, AOE Assigned, consultant, dates and Days Open are copied from the board columns; nothing on this page is authored by hand and nothing is written back.<br><br><b>Two things worth knowing.</b> ABV accounts are identified by board group, not by account name — most are named plainly (Colgate, Asus, Kohler), so a name-based rule would miss them. And Days Open counts from Subscription Start, so the 7 accounts without one show no age at all rather than a zero.<br><br>Rebuilt each weekday morning. If the run fails, a banner appears at the top of this page — no banner means these figures are current.</footer>
+<section class="panel" id="panel-aoe" role="tabpanel" aria-labelledby="tab-aoe" tabindex="-1" hidden>
+<h2>AOE Assigned — 41 of 57 accounts (72%)</h2>
+<p class="lede">An AOE is the agreed outcome an account is onboarding toward. Where one is missing, there is no shared definition of what success looks like.</p>
+<div class="callout crit"><span class="big">$48,967 across 16 accounts has no AOE assigned.</span>10 of them sit in Not Started — the cheapest place to fix this, and the one where it matters most.</div>
+<h2>By stage</h2>
+<p class="lede">Open any stage to see the accounts behind it.</p>
+<div class="tw"><div class="acchead"><span>Stage</span><span class="num h3c">Assigned</span><span class="num h3c">Total</span><span class="h4">Coverage</span><span class="num h5">MRR</span></div>
+<details class="acc"><summary><span class="nm"><svg class="tw2" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6 3.5 L11 8 L6 12.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</span><span class="num h3c">19</span><span class="num h3c">29</span><span class="h4"><span class="rate"><span class="track"><i style="width:66%"></i></span><span class="pc">66%</span></span></span><span class="num h5">$83,978</span></summary><div class="inner"><table><thead><tr><th scope="col">Account</th><th scope="col">Consultant</th><th scope="col">AOE</th><th scope="col" class="num">Days open</th><th scope="col" class="num">MRR</th></tr></thead><tbody><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12894059010">Bridgestone</a></td><td>Gary McGowan</td><td><span class="pill gap">not assigned</span></td><td class="num">—</td><td class="num">—</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12706054823">Chevron Technical Center (LLMO)</a></td><td>Craig Walker</td><td><span class="pill gap">not assigned</span></td><td class="num">40</td><td class="num">$8,944</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12971508731">Glidewell Dental</a></td><td>Craig Walker</td><td><span class="pill gap">not assigned</span></td><td class="num">7</td><td class="num">—</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12978770816">Informa Global</a></td><td>Unassigned</td><td><span class="pill gap">not assigned</span></td><td class="num">—</td><td class="num">—</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12976799962">Jet2</a></td><td>Rich Bryant</td><td><span class="pill gap">not assigned</span></td><td class="num">7</td><td class="num">$0</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12995969373">Los Angeles Clippers</a></td><td>Brian Psota</td><td><span class="pill gap">not assigned</span></td><td class="num">24</td><td class="num">$0</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12671801902">Mariner Wealth Advisors</a></td><td>Daniel Hemhauser</td><td><span class="pill gap">not assigned</span></td><td class="num">43</td><td class="num">$4,166</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12978879134">Masco</a></td><td>Andrew Coe</td><td><span class="pill gap">not assigned</span></td><td class="num">—</td><td class="num">—</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12978708972">Systeme U</a></td><td>David Bushrod</td><td><span class="pill gap">not assigned</span></td><td class="num">27</td><td class="num">$0</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12978249737">The Azek Group</a></td><td>Andrew Coe</td><td><span class="pill gap">not assigned</span></td><td class="num">9</td><td class="num">$8,550</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12891751668">Ancestry</a></td><td>Brian Psota</td><td><span class="pill ok">yes</span></td><td class="num">—</td><td class="num">$0</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12712637646">Best Western</a></td><td>Brian Psota</td><td><span class="pill ok">yes</span></td><td class="num">40</td><td class="num">$0</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12705076960">Canadian Pacific Railway Company</a></td><td>Daniel Hemhauser</td><td><span class="pill ok">yes</span></td><td class="num">41</td><td class="num">$6,250</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12878898082">Colgate</a></td><td>Matthew Peck</td><td><span class="pill ok">yes</span></td><td class="num">22</td><td class="num">$7,082</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12891776114">Dollar General</a></td><td>Andrew Coe</td><td><span class="pill ok">yes</span></td><td class="num">—</td><td class="num">—</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12892086879">Evonik</a></td><td>Matthew Peck</td><td><span class="pill ok">yes</span></td><td class="num">28</td><td class="num">—</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12962624175">ICICI Bank</a></td><td>Roman Pchelintsev</td><td><span class="pill ok">yes</span></td><td class="num">11</td><td class="num">$7,467</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12978864346">Indiafirst Life Insurance Co Ltd</a></td><td>David Bushrod</td><td><span class="pill ok">yes</span></td><td class="num">15</td><td class="num">$0</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12891823212">Interstate Battery</a></td><td>Ricardo Loureiro Vasquez</td><td><span class="pill ok">yes</span></td><td class="num">—</td><td class="num">—</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12978478518">MSC Cruises</a></td><td>Kasra Zadkhorvash</td><td><span class="pill ok">yes</span></td><td class="num">9</td><td class="num">$10,600</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12978779004">Merkle Marketing</a></td><td>Kat Giorgio</td><td><span class="pill ok">yes</span></td><td class="num">30</td><td class="num">—</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12977904376">Panduit Corporation</a></td><td>Craig Walker</td><td><span class="pill ok">yes</span></td><td class="num">21</td><td class="num">—</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12638085334">S-Management Services</a></td><td>Rich Bryant</td><td><span class="pill ok">yes</span></td><td class="num">45</td><td class="num">$4,345</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12978253110">SelectHealth</a></td><td>Andrew Coe</td><td><span class="pill ok">yes</span></td><td class="num">9</td><td class="num">$8,489</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12978834446">Sunstar</a></td><td>Kasra Zadkhorvash</td><td><span class="pill ok">yes</span></td><td class="num">17</td><td class="num">$3,700</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12978931611">Tennis Australia</a></td><td>Camille de Laitre</td><td><span class="pill ok">yes</span></td><td class="num">—</td><td class="num">—</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12902156638">Town of Gilbert</a></td><td>Craig Walker</td><td><span class="pill ok">yes</span></td><td class="num">13</td><td class="num">—</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12685329441">Trex Inc</a></td><td>Kat Giorgio</td><td><span class="pill ok">yes</span></td><td class="num">-53</td><td class="num">$8,135</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12686061704">WK Kellogg Business Services (LLMO)</a></td><td>Craig Walker</td><td><span class="pill ok">yes</span></td><td class="num">41</td><td class="num">$6,250</td></tr></tbody></table></div></details>
+<details class="acc"><summary><span class="nm"><svg class="tw2" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6 3.5 L11 8 L6 12.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="stagedot" style="background:var(--viz-1)" aria-hidden="true"></span>Discovery</span><span class="num h3c">8</span><span class="num h3c">12</span><span class="h4"><span class="rate"><span class="track"><i style="width:67%"></i></span><span class="pc">67%</span></span></span><span class="num h5">$53,477</span></summary><div class="inner"><table><thead><tr><th scope="col">Account</th><th scope="col">Consultant</th><th scope="col">AOE</th><th scope="col" class="num">Days open</th><th scope="col" class="num">MRR</th></tr></thead><tbody><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12705790834">BJ's Restaurants, Inc. - ADOBE LLMO</a></td><td>Ricardo Loureiro Vasquez</td><td><span class="pill gap">not assigned</span></td><td class="num">41</td><td class="num">$0</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12978876557">Cloudera</a></td><td>Kat Giorgio</td><td><span class="pill gap">not assigned</span></td><td class="num">13</td><td class="num">$3,350</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12676271205">Innocean Hyundai Canada</a></td><td>Kat Giorgio</td><td><span class="pill gap">not assigned</span></td><td class="num">38</td><td class="num">$8,166</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12721196387">The New Zealand Automobile Association</a></td><td>Gary McGowan</td><td><span class="pill gap">not assigned</span></td><td class="num">9</td><td class="num">$3,833</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12954423092">Asus</a></td><td>Gary McGowan</td><td><span class="pill ok">yes</span></td><td class="num">9</td><td class="num">$7,083</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12960044275">Kohler</a></td><td>Brian Psota</td><td><span class="pill ok">yes</span></td><td class="num">17</td><td class="num">$0</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12651355431">MRV Engenharia - ADOBE LLMO</a></td><td>Ricardo Loureiro Vasquez</td><td><span class="pill ok">yes</span></td><td class="num">40</td><td class="num">$0</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12967440856">Mazda USA</a></td><td>Brian Psota</td><td><span class="pill ok">yes</span></td><td class="num">20</td><td class="num">$0</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12669638464">Mphasis</a></td><td>David Bushrod</td><td><span class="pill ok">yes</span></td><td class="num">41</td><td class="num">$4,167</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12973301262">Piramal Finance</a></td><td>Roman Pchelintsev</td><td><span class="pill ok">yes</span></td><td class="num">8</td><td class="num">$4,375</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12909372514">Sorgenia</a></td><td>Rich Bryant</td><td><span class="pill ok">yes</span></td><td class="num">24</td><td class="num">$0</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12745828698">Wyndham</a></td><td>Matthew Peck</td><td><span class="pill ok">yes</span></td><td class="num">41</td><td class="num">$22,503</td></tr></tbody></table></div></details>
+<details class="acc"><summary><span class="nm"><svg class="tw2" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6 3.5 L11 8 L6 12.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="stagedot" style="background:var(--viz-2)" aria-hidden="true"></span>Enablement</span><span class="num h3c">5</span><span class="num h3c">6</span><span class="h4"><span class="rate"><span class="track"><i style="width:83%"></i></span><span class="pc">83%</span></span></span><span class="num h5">$42,338</span></summary><div class="inner"><table><thead><tr><th scope="col">Account</th><th scope="col">Consultant</th><th scope="col">AOE</th><th scope="col" class="num">Days open</th><th scope="col" class="num">MRR</th></tr></thead><tbody><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12730848237">Prudential via Leo Burnett (Publicis HK)</a></td><td>Gary McGowan</td><td><span class="pill gap">not assigned</span></td><td class="num">45</td><td class="num">$7,375</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12780757417">CUHK</a></td><td>Gary McGowan</td><td><span class="pill ok">yes</span></td><td class="num">35</td><td class="num">$5,000</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12417731188">ClearCourse</a></td><td>Rich Bryant</td><td><span class="pill ok">yes</span></td><td class="num">72</td><td class="num">$4,500</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12396089620">Lundbeck</a></td><td>Daniel Hemhauser</td><td><span class="pill ok">yes</span></td><td class="num">20</td><td class="num">$9,583</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12878652481">Mediolanum</a></td><td>Roman Pchelintsev</td><td><span class="pill ok">yes</span></td><td class="num">27</td><td class="num">$4,580</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12936241763">RSM</a></td><td>Daniel Hemhauser</td><td><span class="pill ok">yes</span></td><td class="num">17</td><td class="num">$11,300</td></tr></tbody></table></div></details>
+<details class="acc"><summary><span class="nm"><svg class="tw2" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6 3.5 L11 8 L6 12.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="stagedot" style="background:var(--viz-3)" aria-hidden="true"></span>Adoption</span><span class="num h3c">5</span><span class="num h3c">5</span><span class="h4"><span class="rate"><span class="track full"><i style="width:100%"></i></span><span class="pc">100%</span></span></span><span class="num h5">$20,205</span></summary><div class="inner"><table><thead><tr><th scope="col">Account</th><th scope="col">Consultant</th><th scope="col">AOE</th><th scope="col" class="num">Days open</th><th scope="col" class="num">MRR</th></tr></thead><tbody><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12151149551">AGL ENERGY</a></td><td>Gary McGowan</td><td><span class="pill ok">yes</span></td><td class="num">11</td><td class="num">$5,000</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12857920369">AIMCO Properties / AirCommunities</a></td><td>Daniel Hemhauser</td><td><span class="pill ok">yes</span></td><td class="num">23</td><td class="num">—</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12714945286">Lacoste</a></td><td>Rich Bryant</td><td><span class="pill ok">yes</span></td><td class="num">41</td><td class="num">$4,750</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12745799748">Sail Outdoors</a></td><td>Matthew Peck</td><td><span class="pill ok">yes</span></td><td class="num">35</td><td class="num">$5,455</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12825118422">Sourcebooks</a></td><td>Daniel Hemhauser</td><td><span class="pill ok">yes</span></td><td class="num">35</td><td class="num">$5,000</td></tr></tbody></table></div></details>
+<details class="acc"><summary><span class="nm"><svg class="tw2" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6 3.5 L11 8 L6 12.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="stagedot" style="background:var(--viz-4)" aria-hidden="true"></span>Launch</span><span class="num h3c">4</span><span class="num h3c">5</span><span class="h4"><span class="rate"><span class="track"><i style="width:80%"></i></span><span class="pc">80%</span></span></span><span class="num h5">$29,665</span></summary><div class="inner"><table><thead><tr><th scope="col">Account</th><th scope="col">Consultant</th><th scope="col">AOE</th><th scope="col" class="num">Days open</th><th scope="col" class="num">MRR</th></tr></thead><tbody><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12345993339">Unicatt</a></td><td>Rich Bryant</td><td><span class="pill gap">not assigned</span></td><td class="num">85</td><td class="num">$4,583</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12168998797">Banque Pictet &amp; Cie</a></td><td>Rich Bryant</td><td><span class="pill ok">yes</span></td><td class="num">71</td><td class="num">$5,499</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12829531267">Bayport (Caterpillar Signs)</a></td><td>Kasra Zadkhorvash</td><td><span class="pill ok">yes</span></td><td class="num">29</td><td class="num">$4,166</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12645119070">Chow Tai Fook</a></td><td>Camille de Laitre</td><td><span class="pill ok">yes</span></td><td class="num">38</td><td class="num">$7,517</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12465904931">Mango</a></td><td>Rich Bryant</td><td><span class="pill ok">yes</span></td><td class="num">51</td><td class="num">$7,900</td></tr></tbody></table></div></details>
+<div class="acchead" style="border-bottom:1px solid var(--line);text-transform:none;letter-spacing:0;font-weight:400;color:var(--ink-3)"><span><span class="stagedot" style="background:var(--negative-icon)" aria-hidden="true"></span>⚠ Risk</span><span class="num h3c">—</span><span class="num h3c">0</span><span class="h4"><span class="pill na">none</span></span><span class="num h5">—</span></div>
+<div class="acchead" style="border-bottom:0;border-top:1px solid var(--line-strong);background:var(--sunken)"><span>All stages</span><span class="num h3c">41</span><span class="num h3c">57</span><span class="h4">72%</span><span class="num h5">$229,663</span></div></div>
+<h2>Not assigned — the worklist</h2>
+<p class="lede">The 16 accounts to chase. Search by account or consultant, filter by stage or region, and sort any column.</p>
+<div class="toolbar" data-controls="aoe-list">
+<div class="search"><label class="sr" for="aoe-q">Search accounts by name or consultant</label><input id="aoe-q" type="search" placeholder="Search account or consultant…" autocomplete="off"><button class="clr" type="button" hidden aria-label="Clear search">&times;</button></div>
+<div class="chipset"><span class="lbl">Stage</span>
+<button class="chip" type="button" data-filter="stage" data-value="Not Started" aria-pressed="false">Not Started</button>
+<button class="chip" type="button" data-filter="stage" data-value="Discovery" aria-pressed="false">Discovery</button>
+<button class="chip" type="button" data-filter="stage" data-value="Enablement" aria-pressed="false">Enablement</button>
+<button class="chip" type="button" data-filter="stage" data-value="Launch" aria-pressed="false">Launch</button>
 </div>
+<div class="chipset"><span class="lbl">Region</span>
+<button class="chip" type="button" data-filter="region" data-value="AMER" aria-pressed="false">AMER</button>
+<button class="chip" type="button" data-filter="region" data-value="APAC" aria-pressed="false">APAC</button>
+<button class="chip" type="button" data-filter="region" data-value="EMEA" aria-pressed="false">EMEA</button>
+</div>
+<button class="chip reset" type="button" hidden>Clear all</button>
+<p class="count" role="status" aria-live="polite"></p>
+</div>
+<div class="tw"><table id="aoe-list"><caption class="sr">Accounts with no AOE assigned</caption><thead><tr><th scope="col" aria-sort="none" data-type="text">Account<span class="ar">▲</span></th><th scope="col" aria-sort="none" data-type="text">Stage<span class="ar">▲</span></th><th scope="col" aria-sort="none" data-type="text">Consultant<span class="ar">▲</span></th><th scope="col" aria-sort="none" data-type="text">Region<span class="ar">▲</span></th><th scope="col" class="num" aria-sort="none" data-type="num">Days open<span class="ar">▲</span></th><th scope="col" class="num" aria-sort="none" data-type="num">MRR<span class="ar">▲</span></th></tr></thead><tbody>
+<tr data-search="mariner wealth advisors daniel hemhauser not started amer" data-stage="Not Started" data-region="AMER"><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12671801902">Mariner Wealth Advisors</a></td><td data-v="Not Started"><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Daniel Hemhauser</td><td>AMER</td><td class="num" data-v="43">43</td><td class="num" data-v="4166">$4,166</td></tr>
+<tr data-search="chevron technical center (llmo) craig walker not started amer" data-stage="Not Started" data-region="AMER"><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12706054823">Chevron Technical Center (LLMO)</a></td><td data-v="Not Started"><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Craig Walker</td><td>AMER</td><td class="num" data-v="40">40</td><td class="num" data-v="8944">$8,944</td></tr>
+<tr data-search="systeme u david bushrod not started emea" data-stage="Not Started" data-region="EMEA"><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12978708972">Systeme U</a></td><td data-v="Not Started"><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>David Bushrod</td><td>EMEA</td><td class="num" data-v="27">27</td><td class="num" data-v="0">$0</td></tr>
+<tr data-search="los angeles clippers brian psota not started amer" data-stage="Not Started" data-region="AMER"><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12995969373">Los Angeles Clippers</a></td><td data-v="Not Started"><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Brian Psota</td><td>AMER</td><td class="num" data-v="24">24</td><td class="num" data-v="0">$0</td></tr>
+<tr data-search="the azek group andrew coe not started amer" data-stage="Not Started" data-region="AMER"><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12978249737">The Azek Group</a></td><td data-v="Not Started"><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Andrew Coe</td><td>AMER</td><td class="num" data-v="9">9</td><td class="num" data-v="8550">$8,550</td></tr>
+<tr data-search="glidewell dental craig walker not started amer" data-stage="Not Started" data-region="AMER"><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12971508731">Glidewell Dental</a></td><td data-v="Not Started"><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Craig Walker</td><td>AMER</td><td class="num" data-v="7">7</td><td class="num" data-v="">—</td></tr>
+<tr data-search="jet2 rich bryant not started emea" data-stage="Not Started" data-region="EMEA"><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12976799962">Jet2</a></td><td data-v="Not Started"><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Rich Bryant</td><td>EMEA</td><td class="num" data-v="7">7</td><td class="num" data-v="0">$0</td></tr>
+<tr data-search="bridgestone gary mcgowan not started apac" data-stage="Not Started" data-region="APAC"><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12894059010">Bridgestone</a></td><td data-v="Not Started"><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Gary McGowan</td><td>APAC</td><td class="num" data-v="">—</td><td class="num" data-v="">—</td></tr>
+<tr data-search="informa global unassigned not started" data-stage="Not Started" data-region=""><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12978770816">Informa Global</a></td><td data-v="Not Started"><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Unassigned</td><td>—</td><td class="num" data-v="">—</td><td class="num" data-v="">—</td></tr>
+<tr data-search="masco andrew coe not started" data-stage="Not Started" data-region=""><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12978879134">Masco</a></td><td data-v="Not Started"><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Andrew Coe</td><td>—</td><td class="num" data-v="">—</td><td class="num" data-v="">—</td></tr>
+<tr data-search="bj&#x27;s restaurants, inc. - adobe llmo ricardo loureiro vasquez discovery amer" data-stage="Discovery" data-region="AMER"><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12705790834">BJ's Restaurants, Inc. - ADOBE LLMO</a></td><td data-v="Discovery"><span class="stagedot" style="background:var(--viz-1)" aria-hidden="true"></span>Discovery</td><td>Ricardo Loureiro Vasquez</td><td>AMER</td><td class="num" data-v="41">41</td><td class="num" data-v="0">$0</td></tr>
+<tr data-search="innocean hyundai canada kat giorgio discovery amer" data-stage="Discovery" data-region="AMER"><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12676271205">Innocean Hyundai Canada</a></td><td data-v="Discovery"><span class="stagedot" style="background:var(--viz-1)" aria-hidden="true"></span>Discovery</td><td>Kat Giorgio</td><td>AMER</td><td class="num" data-v="38">38</td><td class="num" data-v="8166">$8,166</td></tr>
+<tr data-search="cloudera kat giorgio discovery amer" data-stage="Discovery" data-region="AMER"><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12978876557">Cloudera</a></td><td data-v="Discovery"><span class="stagedot" style="background:var(--viz-1)" aria-hidden="true"></span>Discovery</td><td>Kat Giorgio</td><td>AMER</td><td class="num" data-v="13">13</td><td class="num" data-v="3350">$3,350</td></tr>
+<tr data-search="the new zealand automobile association gary mcgowan discovery apac" data-stage="Discovery" data-region="APAC"><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12721196387">The New Zealand Automobile Association</a></td><td data-v="Discovery"><span class="stagedot" style="background:var(--viz-1)" aria-hidden="true"></span>Discovery</td><td>Gary McGowan</td><td>APAC</td><td class="num" data-v="9">9</td><td class="num" data-v="3833">$3,833</td></tr>
+<tr data-search="prudential via leo burnett (publicis hk) gary mcgowan enablement apac" data-stage="Enablement" data-region="APAC"><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12730848237">Prudential via Leo Burnett (Publicis HK)</a></td><td data-v="Enablement"><span class="stagedot" style="background:var(--viz-2)" aria-hidden="true"></span>Enablement</td><td>Gary McGowan</td><td>APAC</td><td class="num" data-v="45">45</td><td class="num" data-v="7375">$7,375</td></tr>
+<tr data-search="unicatt rich bryant launch emea" data-stage="Launch" data-region="EMEA"><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12345993339">Unicatt</a></td><td data-v="Launch"><span class="stagedot" style="background:var(--viz-4)" aria-hidden="true"></span>Launch</td><td>Rich Bryant</td><td>EMEA</td><td class="num" data-v="85">85</td><td class="num" data-v="4583">$4,583</td></tr>
+<tr class="nores" hidden><td colspan="6" class="empty">No accounts match those filters.</td></tr>
+</tbody></table></div>
+</section>
+<section class="panel" id="panel-team" role="tabpanel" aria-labelledby="tab-team" tabindex="-1" hidden>
+<h2>Consultant load</h2>
+<p class="lede">13 consultants carrying 57 accounts. Open any row to see whose they are.</p>
+<div class="tw"><div class="acchead"><span>Consultant</span><span class="num h3c">Accounts</span><span class="num h3c">In progress</span><span class="h4">AOE coverage</span><span class="num h5">MRR</span></div>
+<details class="acc"><summary><span class="nm"><svg class="tw2" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6 3.5 L11 8 L6 12.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Rich Bryant</span><span class="num h3c">8</span><span class="num h3c">6</span><span class="h4"><span class="rate"><span class="track"><i style="width:75%"></i></span><span class="pc">75%</span></span></span><span class="num h5">$31,577 <span style="color:var(--ink-3);font-size:11px">· 85d oldest</span></span></summary><div class="inner"><table><thead><tr><th scope="col">Account</th><th scope="col">Stage</th><th scope="col">Consultant</th><th scope="col">AOE</th><th scope="col" class="num">Days open</th><th scope="col" class="num">MRR</th></tr></thead><tbody><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12345993339">Unicatt</a></td><td><span class="stagedot" style="background:var(--viz-4)" aria-hidden="true"></span>Launch</td><td>Rich Bryant</td><td><span class="pill gap">not assigned</span></td><td class="num">85</td><td class="num">$4,583</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12976799962">Jet2</a></td><td><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Rich Bryant</td><td><span class="pill gap">not assigned</span></td><td class="num">7</td><td class="num">$0</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12417731188">ClearCourse</a></td><td><span class="stagedot" style="background:var(--viz-2)" aria-hidden="true"></span>Enablement</td><td>Rich Bryant</td><td><span class="pill ok">yes</span></td><td class="num">72</td><td class="num">$4,500</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12168998797">Banque Pictet &amp; Cie</a></td><td><span class="stagedot" style="background:var(--viz-4)" aria-hidden="true"></span>Launch</td><td>Rich Bryant</td><td><span class="pill ok">yes</span></td><td class="num">71</td><td class="num">$5,499</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12465904931">Mango</a></td><td><span class="stagedot" style="background:var(--viz-4)" aria-hidden="true"></span>Launch</td><td>Rich Bryant</td><td><span class="pill ok">yes</span></td><td class="num">51</td><td class="num">$7,900</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12638085334">S-Management Services</a></td><td><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Rich Bryant</td><td><span class="pill ok">yes</span></td><td class="num">45</td><td class="num">$4,345</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12714945286">Lacoste</a></td><td><span class="stagedot" style="background:var(--viz-3)" aria-hidden="true"></span>Adoption</td><td>Rich Bryant</td><td><span class="pill ok">yes</span></td><td class="num">41</td><td class="num">$4,750</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12909372514">Sorgenia</a></td><td><span class="stagedot" style="background:var(--viz-1)" aria-hidden="true"></span>Discovery</td><td>Rich Bryant</td><td><span class="pill ok">yes</span></td><td class="num">24</td><td class="num">$0</td></tr></tbody></table></div></details>
+<details class="acc"><summary><span class="nm"><svg class="tw2" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6 3.5 L11 8 L6 12.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Gary McGowan</span><span class="num h3c">6</span><span class="num h3c">5</span><span class="h4"><span class="rate"><span class="track"><i style="width:50%"></i></span><span class="pc">50%</span></span></span><span class="num h5">$28,291 <span style="color:var(--ink-3);font-size:11px">· 45d oldest</span></span></summary><div class="inner"><table><thead><tr><th scope="col">Account</th><th scope="col">Stage</th><th scope="col">Consultant</th><th scope="col">AOE</th><th scope="col" class="num">Days open</th><th scope="col" class="num">MRR</th></tr></thead><tbody><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12730848237">Prudential via Leo Burnett (Publicis HK)</a></td><td><span class="stagedot" style="background:var(--viz-2)" aria-hidden="true"></span>Enablement</td><td>Gary McGowan</td><td><span class="pill gap">not assigned</span></td><td class="num">45</td><td class="num">$7,375</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12721196387">The New Zealand Automobile Association</a></td><td><span class="stagedot" style="background:var(--viz-1)" aria-hidden="true"></span>Discovery</td><td>Gary McGowan</td><td><span class="pill gap">not assigned</span></td><td class="num">9</td><td class="num">$3,833</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12894059010">Bridgestone</a></td><td><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Gary McGowan</td><td><span class="pill gap">not assigned</span></td><td class="num">—</td><td class="num">—</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12780757417">CUHK</a></td><td><span class="stagedot" style="background:var(--viz-2)" aria-hidden="true"></span>Enablement</td><td>Gary McGowan</td><td><span class="pill ok">yes</span></td><td class="num">35</td><td class="num">$5,000</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12151149551">AGL ENERGY</a></td><td><span class="stagedot" style="background:var(--viz-3)" aria-hidden="true"></span>Adoption</td><td>Gary McGowan</td><td><span class="pill ok">yes</span></td><td class="num">11</td><td class="num">$5,000</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12954423092">Asus</a></td><td><span class="stagedot" style="background:var(--viz-1)" aria-hidden="true"></span>Discovery</td><td>Gary McGowan</td><td><span class="pill ok">yes</span></td><td class="num">9</td><td class="num">$7,083</td></tr></tbody></table></div></details>
+<details class="acc"><summary><span class="nm"><svg class="tw2" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6 3.5 L11 8 L6 12.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Daniel Hemhauser</span><span class="num h3c">6</span><span class="num h3c">4</span><span class="h4"><span class="rate"><span class="track"><i style="width:83%"></i></span><span class="pc">83%</span></span></span><span class="num h5">$36,299 <span style="color:var(--ink-3);font-size:11px">· 43d oldest</span></span></summary><div class="inner"><table><thead><tr><th scope="col">Account</th><th scope="col">Stage</th><th scope="col">Consultant</th><th scope="col">AOE</th><th scope="col" class="num">Days open</th><th scope="col" class="num">MRR</th></tr></thead><tbody><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12671801902">Mariner Wealth Advisors</a></td><td><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Daniel Hemhauser</td><td><span class="pill gap">not assigned</span></td><td class="num">43</td><td class="num">$4,166</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12705076960">Canadian Pacific Railway Company</a></td><td><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Daniel Hemhauser</td><td><span class="pill ok">yes</span></td><td class="num">41</td><td class="num">$6,250</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12825118422">Sourcebooks</a></td><td><span class="stagedot" style="background:var(--viz-3)" aria-hidden="true"></span>Adoption</td><td>Daniel Hemhauser</td><td><span class="pill ok">yes</span></td><td class="num">35</td><td class="num">$5,000</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12857920369">AIMCO Properties / AirCommunities</a></td><td><span class="stagedot" style="background:var(--viz-3)" aria-hidden="true"></span>Adoption</td><td>Daniel Hemhauser</td><td><span class="pill ok">yes</span></td><td class="num">23</td><td class="num">—</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12396089620">Lundbeck</a></td><td><span class="stagedot" style="background:var(--viz-2)" aria-hidden="true"></span>Enablement</td><td>Daniel Hemhauser</td><td><span class="pill ok">yes</span></td><td class="num">20</td><td class="num">$9,583</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12936241763">RSM</a></td><td><span class="stagedot" style="background:var(--viz-2)" aria-hidden="true"></span>Enablement</td><td>Daniel Hemhauser</td><td><span class="pill ok">yes</span></td><td class="num">17</td><td class="num">$11,300</td></tr></tbody></table></div></details>
+<details class="acc"><summary><span class="nm"><svg class="tw2" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6 3.5 L11 8 L6 12.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Craig Walker</span><span class="num h3c">5</span><span class="num h3c">0</span><span class="h4"><span class="rate"><span class="track"><i style="width:60%"></i></span><span class="pc">60%</span></span></span><span class="num h5">$15,194 <span style="color:var(--ink-3);font-size:11px">· 41d oldest</span></span></summary><div class="inner"><table><thead><tr><th scope="col">Account</th><th scope="col">Stage</th><th scope="col">Consultant</th><th scope="col">AOE</th><th scope="col" class="num">Days open</th><th scope="col" class="num">MRR</th></tr></thead><tbody><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12706054823">Chevron Technical Center (LLMO)</a></td><td><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Craig Walker</td><td><span class="pill gap">not assigned</span></td><td class="num">40</td><td class="num">$8,944</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12971508731">Glidewell Dental</a></td><td><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Craig Walker</td><td><span class="pill gap">not assigned</span></td><td class="num">7</td><td class="num">—</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12686061704">WK Kellogg Business Services (LLMO)</a></td><td><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Craig Walker</td><td><span class="pill ok">yes</span></td><td class="num">41</td><td class="num">$6,250</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12977904376">Panduit Corporation</a></td><td><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Craig Walker</td><td><span class="pill ok">yes</span></td><td class="num">21</td><td class="num">—</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12902156638">Town of Gilbert</a></td><td><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Craig Walker</td><td><span class="pill ok">yes</span></td><td class="num">13</td><td class="num">—</td></tr></tbody></table></div></details>
+<details class="acc"><summary><span class="nm"><svg class="tw2" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6 3.5 L11 8 L6 12.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Brian Psota</span><span class="num h3c">5</span><span class="num h3c">2</span><span class="h4"><span class="rate"><span class="track"><i style="width:80%"></i></span><span class="pc">80%</span></span></span><span class="num h5">$0 <span style="color:var(--ink-3);font-size:11px">· 40d oldest</span></span></summary><div class="inner"><table><thead><tr><th scope="col">Account</th><th scope="col">Stage</th><th scope="col">Consultant</th><th scope="col">AOE</th><th scope="col" class="num">Days open</th><th scope="col" class="num">MRR</th></tr></thead><tbody><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12995969373">Los Angeles Clippers</a></td><td><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Brian Psota</td><td><span class="pill gap">not assigned</span></td><td class="num">24</td><td class="num">$0</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12712637646">Best Western</a></td><td><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Brian Psota</td><td><span class="pill ok">yes</span></td><td class="num">40</td><td class="num">$0</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12967440856">Mazda USA</a></td><td><span class="stagedot" style="background:var(--viz-1)" aria-hidden="true"></span>Discovery</td><td>Brian Psota</td><td><span class="pill ok">yes</span></td><td class="num">20</td><td class="num">$0</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12960044275">Kohler</a></td><td><span class="stagedot" style="background:var(--viz-1)" aria-hidden="true"></span>Discovery</td><td>Brian Psota</td><td><span class="pill ok">yes</span></td><td class="num">17</td><td class="num">$0</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12891751668">Ancestry</a></td><td><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Brian Psota</td><td><span class="pill ok">yes</span></td><td class="num">—</td><td class="num">$0</td></tr></tbody></table></div></details>
+<details class="acc"><summary><span class="nm"><svg class="tw2" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6 3.5 L11 8 L6 12.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Andrew Coe</span><span class="num h3c">4</span><span class="num h3c">0</span><span class="h4"><span class="rate"><span class="track"><i style="width:50%"></i></span><span class="pc">50%</span></span></span><span class="num h5">$17,039 <span style="color:var(--ink-3);font-size:11px">· 9d oldest</span></span></summary><div class="inner"><table><thead><tr><th scope="col">Account</th><th scope="col">Stage</th><th scope="col">Consultant</th><th scope="col">AOE</th><th scope="col" class="num">Days open</th><th scope="col" class="num">MRR</th></tr></thead><tbody><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12978249737">The Azek Group</a></td><td><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Andrew Coe</td><td><span class="pill gap">not assigned</span></td><td class="num">9</td><td class="num">$8,550</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12978879134">Masco</a></td><td><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Andrew Coe</td><td><span class="pill gap">not assigned</span></td><td class="num">—</td><td class="num">—</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12978253110">SelectHealth</a></td><td><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Andrew Coe</td><td><span class="pill ok">yes</span></td><td class="num">9</td><td class="num">$8,489</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12891776114">Dollar General</a></td><td><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Andrew Coe</td><td><span class="pill ok">yes</span></td><td class="num">—</td><td class="num">—</td></tr></tbody></table></div></details>
+<details class="acc"><summary><span class="nm"><svg class="tw2" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6 3.5 L11 8 L6 12.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Kat Giorgio</span><span class="num h3c">4</span><span class="num h3c">2</span><span class="h4"><span class="rate"><span class="track"><i style="width:50%"></i></span><span class="pc">50%</span></span></span><span class="num h5">$19,651 <span style="color:var(--ink-3);font-size:11px">· 38d oldest</span></span></summary><div class="inner"><table><thead><tr><th scope="col">Account</th><th scope="col">Stage</th><th scope="col">Consultant</th><th scope="col">AOE</th><th scope="col" class="num">Days open</th><th scope="col" class="num">MRR</th></tr></thead><tbody><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12676271205">Innocean Hyundai Canada</a></td><td><span class="stagedot" style="background:var(--viz-1)" aria-hidden="true"></span>Discovery</td><td>Kat Giorgio</td><td><span class="pill gap">not assigned</span></td><td class="num">38</td><td class="num">$8,166</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12978876557">Cloudera</a></td><td><span class="stagedot" style="background:var(--viz-1)" aria-hidden="true"></span>Discovery</td><td>Kat Giorgio</td><td><span class="pill gap">not assigned</span></td><td class="num">13</td><td class="num">$3,350</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12978779004">Merkle Marketing</a></td><td><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Kat Giorgio</td><td><span class="pill ok">yes</span></td><td class="num">30</td><td class="num">—</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12685329441">Trex Inc</a></td><td><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Kat Giorgio</td><td><span class="pill ok">yes</span></td><td class="num">-53</td><td class="num">$8,135</td></tr></tbody></table></div></details>
+<details class="acc"><summary><span class="nm"><svg class="tw2" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6 3.5 L11 8 L6 12.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Matthew Peck</span><span class="num h3c">4</span><span class="num h3c">2</span><span class="h4"><span class="rate"><span class="track full"><i style="width:100%"></i></span><span class="pc">100%</span></span></span><span class="num h5">$35,040 <span style="color:var(--ink-3);font-size:11px">· 41d oldest</span></span></summary><div class="inner"><table><thead><tr><th scope="col">Account</th><th scope="col">Stage</th><th scope="col">Consultant</th><th scope="col">AOE</th><th scope="col" class="num">Days open</th><th scope="col" class="num">MRR</th></tr></thead><tbody><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12745828698">Wyndham</a></td><td><span class="stagedot" style="background:var(--viz-1)" aria-hidden="true"></span>Discovery</td><td>Matthew Peck</td><td><span class="pill ok">yes</span></td><td class="num">41</td><td class="num">$22,503</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12745799748">Sail Outdoors</a></td><td><span class="stagedot" style="background:var(--viz-3)" aria-hidden="true"></span>Adoption</td><td>Matthew Peck</td><td><span class="pill ok">yes</span></td><td class="num">35</td><td class="num">$5,455</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12892086879">Evonik</a></td><td><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Matthew Peck</td><td><span class="pill ok">yes</span></td><td class="num">28</td><td class="num">—</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12878898082">Colgate</a></td><td><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Matthew Peck</td><td><span class="pill ok">yes</span></td><td class="num">22</td><td class="num">$7,082</td></tr></tbody></table></div></details>
+<details class="acc"><summary><span class="nm"><svg class="tw2" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6 3.5 L11 8 L6 12.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>David Bushrod</span><span class="num h3c">3</span><span class="num h3c">1</span><span class="h4"><span class="rate"><span class="track"><i style="width:67%"></i></span><span class="pc">67%</span></span></span><span class="num h5">$4,167 <span style="color:var(--ink-3);font-size:11px">· 41d oldest</span></span></summary><div class="inner"><table><thead><tr><th scope="col">Account</th><th scope="col">Stage</th><th scope="col">Consultant</th><th scope="col">AOE</th><th scope="col" class="num">Days open</th><th scope="col" class="num">MRR</th></tr></thead><tbody><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12978708972">Systeme U</a></td><td><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>David Bushrod</td><td><span class="pill gap">not assigned</span></td><td class="num">27</td><td class="num">$0</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12669638464">Mphasis</a></td><td><span class="stagedot" style="background:var(--viz-1)" aria-hidden="true"></span>Discovery</td><td>David Bushrod</td><td><span class="pill ok">yes</span></td><td class="num">41</td><td class="num">$4,167</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12978864346">Indiafirst Life Insurance Co Ltd</a></td><td><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>David Bushrod</td><td><span class="pill ok">yes</span></td><td class="num">15</td><td class="num">$0</td></tr></tbody></table></div></details>
+<details class="acc"><summary><span class="nm"><svg class="tw2" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6 3.5 L11 8 L6 12.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Ricardo Loureiro Vasquez</span><span class="num h3c">3</span><span class="num h3c">2</span><span class="h4"><span class="rate"><span class="track"><i style="width:67%"></i></span><span class="pc">67%</span></span></span><span class="num h5">$0 <span style="color:var(--ink-3);font-size:11px">· 41d oldest</span></span></summary><div class="inner"><table><thead><tr><th scope="col">Account</th><th scope="col">Stage</th><th scope="col">Consultant</th><th scope="col">AOE</th><th scope="col" class="num">Days open</th><th scope="col" class="num">MRR</th></tr></thead><tbody><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12705790834">BJ's Restaurants, Inc. - ADOBE LLMO</a></td><td><span class="stagedot" style="background:var(--viz-1)" aria-hidden="true"></span>Discovery</td><td>Ricardo Loureiro Vasquez</td><td><span class="pill gap">not assigned</span></td><td class="num">41</td><td class="num">$0</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12651355431">MRV Engenharia - ADOBE LLMO</a></td><td><span class="stagedot" style="background:var(--viz-1)" aria-hidden="true"></span>Discovery</td><td>Ricardo Loureiro Vasquez</td><td><span class="pill ok">yes</span></td><td class="num">40</td><td class="num">$0</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12891823212">Interstate Battery</a></td><td><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Ricardo Loureiro Vasquez</td><td><span class="pill ok">yes</span></td><td class="num">—</td><td class="num">—</td></tr></tbody></table></div></details>
+<details class="acc"><summary><span class="nm"><svg class="tw2" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6 3.5 L11 8 L6 12.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Kasra Zadkhorvash</span><span class="num h3c">3</span><span class="num h3c">1</span><span class="h4"><span class="rate"><span class="track full"><i style="width:100%"></i></span><span class="pc">100%</span></span></span><span class="num h5">$18,466 <span style="color:var(--ink-3);font-size:11px">· 29d oldest</span></span></summary><div class="inner"><table><thead><tr><th scope="col">Account</th><th scope="col">Stage</th><th scope="col">Consultant</th><th scope="col">AOE</th><th scope="col" class="num">Days open</th><th scope="col" class="num">MRR</th></tr></thead><tbody><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12829531267">Bayport (Caterpillar Signs)</a></td><td><span class="stagedot" style="background:var(--viz-4)" aria-hidden="true"></span>Launch</td><td>Kasra Zadkhorvash</td><td><span class="pill ok">yes</span></td><td class="num">29</td><td class="num">$4,166</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12978834446">Sunstar</a></td><td><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Kasra Zadkhorvash</td><td><span class="pill ok">yes</span></td><td class="num">17</td><td class="num">$3,700</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12978478518">MSC Cruises</a></td><td><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Kasra Zadkhorvash</td><td><span class="pill ok">yes</span></td><td class="num">9</td><td class="num">$10,600</td></tr></tbody></table></div></details>
+<details class="acc"><summary><span class="nm"><svg class="tw2" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6 3.5 L11 8 L6 12.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Roman Pchelintsev</span><span class="num h3c">3</span><span class="num h3c">2</span><span class="h4"><span class="rate"><span class="track full"><i style="width:100%"></i></span><span class="pc">100%</span></span></span><span class="num h5">$16,422 <span style="color:var(--ink-3);font-size:11px">· 27d oldest</span></span></summary><div class="inner"><table><thead><tr><th scope="col">Account</th><th scope="col">Stage</th><th scope="col">Consultant</th><th scope="col">AOE</th><th scope="col" class="num">Days open</th><th scope="col" class="num">MRR</th></tr></thead><tbody><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12878652481">Mediolanum</a></td><td><span class="stagedot" style="background:var(--viz-2)" aria-hidden="true"></span>Enablement</td><td>Roman Pchelintsev</td><td><span class="pill ok">yes</span></td><td class="num">27</td><td class="num">$4,580</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12962624175">ICICI Bank</a></td><td><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Roman Pchelintsev</td><td><span class="pill ok">yes</span></td><td class="num">11</td><td class="num">$7,467</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12973301262">Piramal Finance</a></td><td><span class="stagedot" style="background:var(--viz-1)" aria-hidden="true"></span>Discovery</td><td>Roman Pchelintsev</td><td><span class="pill ok">yes</span></td><td class="num">8</td><td class="num">$4,375</td></tr></tbody></table></div></details>
+<details class="acc"><summary><span class="nm"><svg class="tw2" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6 3.5 L11 8 L6 12.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Camille de Laitre</span><span class="num h3c">2</span><span class="num h3c">1</span><span class="h4"><span class="rate"><span class="track full"><i style="width:100%"></i></span><span class="pc">100%</span></span></span><span class="num h5">$7,517 <span style="color:var(--ink-3);font-size:11px">· 38d oldest</span></span></summary><div class="inner"><table><thead><tr><th scope="col">Account</th><th scope="col">Stage</th><th scope="col">Consultant</th><th scope="col">AOE</th><th scope="col" class="num">Days open</th><th scope="col" class="num">MRR</th></tr></thead><tbody><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12645119070">Chow Tai Fook</a></td><td><span class="stagedot" style="background:var(--viz-4)" aria-hidden="true"></span>Launch</td><td>Camille de Laitre</td><td><span class="pill ok">yes</span></td><td class="num">38</td><td class="num">$7,517</td></tr><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12978931611">Tennis Australia</a></td><td><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Camille de Laitre</td><td><span class="pill ok">yes</span></td><td class="num">—</td><td class="num">—</td></tr></tbody></table></div></details>
+<details class="acc"><summary><span class="nm"><svg class="tw2" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6 3.5 L11 8 L6 12.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="pill na">Unassigned</span></span><span class="num h3c">1</span><span class="num h3c">0</span><span class="h4"><span class="rate"><span class="track none"><i style="width:0%"></i></span><span class="pc">0%</span></span></span><span class="num h5">$0 <span style="color:var(--ink-3);font-size:11px">· —</span></span></summary><div class="inner"><table><thead><tr><th scope="col">Account</th><th scope="col">Stage</th><th scope="col">Consultant</th><th scope="col">AOE</th><th scope="col" class="num">Days open</th><th scope="col" class="num">MRR</th></tr></thead><tbody><tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12978770816">Informa Global</a></td><td><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Unassigned</td><td><span class="pill gap">not assigned</span></td><td class="num">—</td><td class="num">—</td></tr></tbody></table></div></details>
+<div class="acchead" style="border-bottom:0;border-top:1px solid var(--line-strong);background:var(--sunken)"><span>Total</span><span class="num h3c">57</span><span class="num h3c">28</span><span class="h4">72%</span><span class="num h5">$229,663</span></div></div>
+<div class="callout" style="margin-top:16px"><b>Oldest</b> is the highest Days Open in that consultant’s ABV book. Accounts with no Subscription Start have no clock and are left out of it. <b>In progress</b> excludes Not Started.</div>
+</section>
+<section class="panel" id="panel-aging" role="tabpanel" aria-labelledby="tab-aging" tabindex="-1" hidden>
+<h2>How long these have been open</h2>
+<div class="callout"><span class="big">These accounts run on the ABV program clock.</span>The onboarding board’s day-count target is written for standard onboarding and does not apply to them, so the buckets below are neutral — no target line, no pass or fail, nothing scored good or bad. Read them as distribution, not performance.</div>
+<div style="margin-top:16px"><div class="chart"><svg viewBox="0 0 820 285" role="img" aria-label="Days open across the ABV pipeline: 0–14 days 12, 15–30 days 16, 31–45 days 17, 46–60 days 1, 61+ days 3, No start date yet 7, Start date in the future 1"><text class="nm" x="0" y="20">0–14 days</text><g class="bar-g"><rect class="bar" x="196" y="2" width="377" height="26" rx="4" fill="var(--accent)"><title>0–14 days — 12 accounts</title></rect></g><text class="val" x="585" y="20">12</text><text class="nm" x="0" y="57">15–30 days</text><g class="bar-g"><rect class="bar" x="196" y="39" width="503" height="26" rx="4" fill="var(--accent)"><title>15–30 days — 16 accounts</title></rect></g><text class="val" x="711" y="57">16</text><text class="nm" x="0" y="94">31–45 days</text><g class="bar-g"><rect class="bar" x="196" y="76" width="534" height="26" rx="4" fill="var(--accent)"><title>31–45 days — 17 accounts</title></rect></g><text class="val" x="742" y="94">17</text><text class="nm" x="0" y="131">46–60 days</text><g class="bar-g"><rect class="bar" x="196" y="113" width="31" height="26" rx="4" fill="var(--accent)"><title>46–60 days — 1 accounts</title></rect></g><text class="val" x="239" y="131">1</text><text class="nm" x="0" y="168">61+ days</text><g class="bar-g"><rect class="bar" x="196" y="150" width="94" height="26" rx="4" fill="var(--accent)"><title>61+ days — 3 accounts</title></rect></g><text class="val" x="302" y="168">3</text><line x1="0" y1="192" x2="820" y2="192" stroke="var(--line-strong)" stroke-width="1"/><text class="nm" x="0" y="225" style="fill:var(--ink-3)">No start date yet</text><rect x="196" y="207" width="220" height="26" rx="4" fill="none" stroke="var(--ink-3)" stroke-width="1.5" stroke-dasharray="3 3"><title>No start date yet — 7 accounts</title></rect><text class="val" x="428" y="225">7</text><text class="nm" x="0" y="262" style="fill:var(--ink-3)">Start date in the future</text><rect x="196" y="244" width="31" height="26" rx="4" fill="none" stroke="var(--ink-3)" stroke-width="1.5" stroke-dasharray="3 3"><title>Start date in the future — 1 accounts</title></rect><text class="val" x="239" y="262">1</text></svg><div class="cap">Board Days Open, counted from Subscription Start. All categories sum to 57. The two dashed rows have no clock running, so they are not placed on the day scale at all.</div></div></div>
+<h2>The accounts with no clock</h2><div class="grid2">
+<div class="tw"><table><caption>No start date yet <span style="font-weight:400;color:var(--ink-3)">— 7</span></caption><thead><tr><th scope="col">Account</th><th scope="col">Stage</th><th scope="col">Consultant</th></tr></thead><tbody>
+<tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12891751668">Ancestry</a></td><td><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Brian Psota</td></tr>
+<tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12894059010">Bridgestone</a></td><td><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Gary McGowan</td></tr>
+<tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12891776114">Dollar General</a></td><td><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Andrew Coe</td></tr>
+<tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12978770816">Informa Global</a></td><td><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Unassigned</td></tr>
+<tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12891823212">Interstate Battery</a></td><td><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Ricardo Loureiro Vasquez</td></tr>
+<tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12978879134">Masco</a></td><td><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Andrew Coe</td></tr>
+<tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12978931611">Tennis Australia</a></td><td><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Camille de Laitre</td></tr>
+</tbody></table><p style="padding:0 18px 16px;margin:10px 0 0;color:var(--ink-3);font-size:12.5px">Subscription Start is empty, so the board reports no age at all.</p></div>
+<div class="tw"><table><caption>Start date in the future <span style="font-weight:400;color:var(--ink-3)">— 1</span></caption><thead><tr><th scope="col">Account</th><th scope="col">Stage</th><th scope="col">Consultant</th></tr></thead><tbody>
+<tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12685329441">Trex Inc</a></td><td><span class="stagedot" style="background:var(--viz-neutral)" aria-hidden="true"></span>Not Started</td><td>Kat Giorgio</td></tr>
+</tbody></table><p style="padding:0 18px 16px;margin:10px 0 0;color:var(--ink-3);font-size:12.5px">Subscription Start is later than today, so Days Open is negative.</p></div>
+</div>
+</section>
+<section class="panel" id="panel-data" role="tabpanel" aria-labelledby="tab-data" tabindex="-1" hidden>
+<h2>ABV Onboarded</h2>
+<div class="tw"><table><thead><tr><th scope="col">Account</th><th scope="col">Consultant</th><th scope="col" class="num">Days open</th><th scope="col">Onboarding End Date</th><th scope="col" class="num">MRR</th></tr></thead><tbody>
+<tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12474099345">Shangri-La Hotels &amp; Resorts</a></td><td>Camille de Laitre</td><td class="num">57</td><td><span class="pill hyg">missing</span></td><td class="num">$8,333</td></tr>
+<tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12667427449">PwC Japan</a></td><td>Camille de Laitre</td><td class="num">42</td><td><span class="pill hyg">missing</span></td><td class="num">$8,300</td></tr>
+<tr><td class="nm"><a href="https://semrush.monday.com/boards/18372591859/pulses/12635802684">TUI Group</a></td><td>David Bushrod</td><td class="num">19</td><td>2026-08-11</td><td class="num">$0</td></tr>
+</tbody></table></div>
+<div class="callout warn" style="margin-top:16px"><span class="big">No cycle time can be read from this group.</span>2 of the 3 onboarded accounts have no Onboarding End Date, so their Days Open is still counting (Shangri-La Hotels &amp; Resorts 57d, PwC Japan 42d) and the board’s TTV Outcome column stays blank. Treat this as board hygiene, not throughput.</div>
+<h2>Board data gaps</h2>
+<p class="lede">Everything the board is missing for the 57 in-progress accounts. Suggest-only — nothing here is written back to Monday.</p>
+<div class="tw"><table><thead><tr><th scope="col">Gap</th><th scope="col" class="num">Accounts</th><th scope="col">Which</th></tr></thead><tbody>
+<tr><td class="nm">No Subscription Start (no clock)</td><td class="num"><span class="pill hyg">7</span></td><td style="font-size:12.5px;color:var(--ink-3)">Ancestry, Bridgestone, Dollar General, Informa Global, Interstate Battery, Masco, Tennis Australia</td></tr>
+<tr><td class="nm">Start date in the future</td><td class="num"><span class="pill hyg">1</span></td><td style="font-size:12.5px;color:var(--ink-3)">Trex Inc</td></tr>
+<tr><td class="nm">No MRR value</td><td class="num"><span class="pill hyg">12</span></td><td style="font-size:12.5px;color:var(--ink-3)">AIMCO Properties / AirCommunities, Bridgestone, Dollar General, Evonik, Glidewell Dental, Informa Global, Interstate Battery, Masco, Merkle Marketing, Panduit Corporation, Tennis Australia, Town of Gilbert</td></tr>
+<tr><td class="nm">MRR set to exactly $0</td><td class="num"><span class="pill hyg">11</span></td><td style="font-size:12.5px;color:var(--ink-3)">Ancestry, BJ's Restaurants, Inc. - ADOBE LLMO, Best Western, Indiafirst Life Insurance Co Ltd, Jet2, Kohler, Los Angeles Clippers, MRV Engenharia - ADOBE LLMO, Mazda USA, Sorgenia, Systeme U</td></tr>
+<tr><td class="nm">No onboarding consultant</td><td class="num"><span class="pill hyg">1</span></td><td style="font-size:12.5px;color:var(--ink-3)">Informa Global</td></tr>
+<tr><td class="nm">No Region</td><td class="num"><span class="pill hyg">3</span></td><td style="font-size:12.5px;color:var(--ink-3)">Informa Global, Masco, Tennis Australia</td></tr>
+<tr><td class="nm">No Products Purchased</td><td class="num"><span class="pill hyg">4</span></td><td style="font-size:12.5px;color:var(--ink-3)">Bridgestone, Informa Global, Masco, Tennis Australia</td></tr>
+</tbody></table></div>
+</section>
+</main>
+<footer><p><b>Where these numbers come from.</b> Two reads of board 18372591859 — group group_mm6c6h21 (57 accounts) and group group_mm6cwt2z (3 accounts) — with no person filter, so this is the whole team’s ABV book. Stage, AOE Assigned, consultant, dates, MRR and Days Open are copied from the board columns; nothing here is authored by hand and nothing is written back.</p><p><b>Two things worth knowing.</b> ABV accounts are identified by board group, not by account name — most are named plainly (Colgate, Asus, Kohler), so a name-based rule would miss almost all of them. And Days Open counts from Subscription Start, so the 7 accounts without one show no age at all rather than a zero.</p><p><b>Design.</b> Adobe Spectrum tokens, with Source Sans 3 standing in for Adobe Clean, which is licensed and cannot be loaded here. Every colour pair on this page was checked to WCAG AA in both light and dark.</p><p>Rebuilt each weekday morning. If a run fails, a banner appears at the top of this page — no banner means these figures are current.</p></footer>
+</div>
+<script>
+(function(){
+  "use strict";
+  var $ = function(s, r){ return (r||document).querySelector(s); };
+  var $$ = function(s, r){ return Array.prototype.slice.call((r||document).querySelectorAll(s)); };
+
+  /* ---------------------------------------------------------------- tabs */
+  var tabs = $$("nav.tabs .tab");
+  var panels = tabs.map(function(t){ return document.getElementById(t.getAttribute("aria-controls")); });
+
+  function setPanel(id, push){
+    tabs.forEach(function(t, i){
+      var on = t.getAttribute("aria-controls") === id;
+      t.setAttribute("aria-selected", on ? "true" : "false");
+      t.tabIndex = on ? 0 : -1;
+      if (panels[i]) panels[i].hidden = !on;
+    });
+    if (push !== false){
+      if (location.hash !== "#" + id) history.replaceState(null, "", "#" + id);
+      var p = document.getElementById(id);
+      if (p){ p.focus({ preventScroll: true }); }
+      window.scrollTo({ top: 0, behavior: "instant" in document.documentElement.style ? "instant" : "auto" });
+    }
+  }
+  tabs.forEach(function(t){
+    t.addEventListener("click", function(){ setPanel(t.getAttribute("aria-controls")); });
+  });
+  var nav = $("nav.tabs");
+  if (nav) nav.addEventListener("keydown", function(e){
+    var i = tabs.indexOf(document.activeElement);
+    if (i < 0) return;
+    var j = null;
+    if (e.key === "ArrowRight" || e.key === "ArrowDown") j = (i + 1) % tabs.length;
+    if (e.key === "ArrowLeft"  || e.key === "ArrowUp")   j = (i - 1 + tabs.length) % tabs.length;
+    if (e.key === "Home") j = 0;
+    if (e.key === "End")  j = tabs.length - 1;
+    if (j === null) return;
+    e.preventDefault();
+    tabs[j].focus();
+    setPanel(tabs[j].getAttribute("aria-controls"));
+  });
+  addEventListener("hashchange", function(){
+    var h = location.hash.slice(1);
+    if (document.getElementById(h) && h.indexOf("panel-") === 0) setPanel(h, false);
+  });
+  (function(){
+    var h = location.hash.slice(1);
+    if (h && document.getElementById(h) && h.indexOf("panel-") === 0) setPanel(h, false);
+  })();
+  $$("a.jump").forEach(function(a){
+    a.addEventListener("click", function(e){
+      e.preventDefault();
+      setPanel(a.getAttribute("href").slice(1));
+    });
+  });
+
+  /* ------------------------------------------------------------ filtering */
+  $$(".toolbar").forEach(function(bar){
+    var table = document.getElementById(bar.getAttribute("data-controls"));
+    if (!table) return;
+    var input = $("input", bar);
+    var clear = $(".clr", bar);
+    var chips = $$(".chip", bar);
+    var out = $(".count", bar);
+    var noneRow = $("tr.nores", table);
+    /* the empty-state row lives in the same tbody — it is never a result */
+    var rows = $$("tbody tr", table).filter(function(t){ return !t.classList.contains("nores"); });
+    var total = rows.length;
+
+    function apply(){
+      var q = (input && input.value || "").trim().toLowerCase();
+      var active = {};
+      chips.forEach(function(c){
+        if (c.getAttribute("aria-pressed") !== "true") return;
+        var k = c.getAttribute("data-filter");
+        (active[k] = active[k] || []).push(c.getAttribute("data-value"));
+      });
+      var shown = 0;
+      rows.forEach(function(tr){
+        var ok = true;
+        if (q && (tr.getAttribute("data-search") || "").indexOf(q) < 0) ok = false;
+        if (ok) Object.keys(active).forEach(function(k){
+          if (active[k].indexOf(tr.getAttribute("data-" + k)) < 0) ok = false;
+        });
+        tr.hidden = !ok;
+        if (ok) shown++;
+      });
+      if (noneRow){ noneRow.hidden = shown !== 0; }
+      if (clear) clear.hidden = !q;
+      if (out){
+        out.innerHTML = shown === total
+          ? "<b>" + total + "</b> accounts"
+          : "<b>" + shown + "</b> of " + total + " accounts";
+      }
+      var any = q || Object.keys(active).length;
+      var reset = $(".reset", bar);
+      if (reset) reset.hidden = !any;
+    }
+    if (input) input.addEventListener("input", apply);
+    if (clear) clear.addEventListener("click", function(){
+      input.value = ""; apply(); input.focus();
+    });
+    chips.forEach(function(c){
+      c.addEventListener("click", function(){
+        c.setAttribute("aria-pressed", c.getAttribute("aria-pressed") === "true" ? "false" : "true");
+        apply();
+      });
+    });
+    var reset = $(".reset", bar);
+    if (reset) reset.addEventListener("click", function(){
+      if (input) input.value = "";
+      chips.forEach(function(c){ c.setAttribute("aria-pressed", "false"); });
+      apply();
+      if (input) input.focus();
+    });
+    apply();
+  });
+
+  /* -------------------------------------------------------------- sorting */
+  $$("table").forEach(function(table){
+    var heads = $$("th[aria-sort]", table);
+    if (!heads.length) return;
+    var body = $("tbody", table);
+    if (!body) return;
+
+    function cellVal(tr, idx, type){
+      var td = tr.children[idx];
+      if (!td) return type === "num" ? -Infinity : "";
+      var raw = td.getAttribute("data-v");
+      if (raw === null) raw = td.textContent;
+      raw = String(raw).trim();
+      if (type !== "num") return raw.toLowerCase();
+      if (raw === "" || raw === "—") return -Infinity;
+      var n = parseFloat(raw.replace(/[^0-9.\-]/g, ""));
+      return isNaN(n) ? -Infinity : n;
+    }
+    heads.forEach(function(th){
+      var idx = Array.prototype.indexOf.call(th.parentNode.children, th);
+      var type = th.getAttribute("data-type") || "text";
+      function sort(){
+        var cur = th.getAttribute("aria-sort");
+        var dir = cur === "ascending" ? -1 : 1;
+        heads.forEach(function(o){ o.setAttribute("aria-sort", "none"); });
+        th.setAttribute("aria-sort", dir === 1 ? "ascending" : "descending");
+        var trs = $$("tr", body).filter(function(t){ return !t.classList.contains("nores"); });
+        trs.map(function(tr, i){ return [tr, i]; })
+           .sort(function(a, b){
+             var x = cellVal(a[0], idx, type), y = cellVal(b[0], idx, type);
+             if (x < y) return -1 * dir;
+             if (x > y) return  1 * dir;
+             return a[1] - b[1];                    /* stable */
+           })
+           .forEach(function(p){ body.appendChild(p[0]); });
+        var nres = $("tr.nores", body);
+        if (nres) body.appendChild(nres);
+      }
+      th.addEventListener("click", sort);
+      th.tabIndex = 0;
+      th.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " "){ e.preventDefault(); sort(); }
+      });
+    });
+  });
+})();
+</script>

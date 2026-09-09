@@ -44,6 +44,7 @@ Reconcile before publishing, and put these numbers in the run summary:
   · AOE ticked is neither 0 nor equal to the total — both are the signature of the checkbox quirk being mis-parsed, and both look plausible on screen. On 2026-09-09 the true figure was 41 of 57. If you see 0 or all, STOP and report; do not publish.
   · the aging categories sum to the total, with "no start date" and "future start date" as their own categories.
   · the consultant table sums to the total, including the Unassigned row.
+  · MRR: report the pipeline total, and how many accounts have NO MRR value and how many are set to exactly $0. An absent MRR is a gap and must never be counted as zero. On 2026-09-09 that was $229,663 across 45 accounts, with 12 missing and 11 at $0.
 
 === STEP 4 — DELIVER ===
 SendUserFile `dist/abv-ob-progress.html` every run — this is the fallback that makes the run useful even if publishing fails.

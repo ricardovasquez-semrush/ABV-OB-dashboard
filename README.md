@@ -11,12 +11,42 @@ it is every ABV account across every consultant, which is the whole point.
 
 ## What's on it
 
-Pipeline volume · Not Started · the in-progress stage breakdown · AOE Assigned coverage
-(overall, by stage, by consultant, and the actionable list of accounts still missing one) ·
-consultant load · a neutral aging distribution · completed accounts and board-data gaps.
+Five tabbed sections, hash-linked so you can send someone straight to one:
 
-Zero JavaScript. One dark page that flips to light when printed. Every account row deep-links
-to its Monday item.
+| Tab | Answers |
+|---|---|
+| **Overview** | How big is the book, how much revenue is in it, what stands out today |
+| **AOE Coverage** | Where the gaps are, by stage, and exactly which accounts to chase |
+| **Team** | Who is carrying what — open any consultant to see their accounts |
+| **Aging** | How long accounts have been open, as a neutral distribution |
+| **Completed & Data** | The onboarded accounts, and everything the board is missing |
+
+The AOE-by-stage and consultant rows expand to reveal the accounts behind them, each
+deep-linked to its Monday item. The worklist is searchable, filterable by stage and region,
+and sortable on every column.
+
+## Design
+
+Adobe Spectrum, read out of `~/Documents/Adobe Branding/` — which turns out to be a saved
+Adobe web app, not a written guideline, so the brand lives entirely in its design tokens.
+
+Three things that came out of reading it:
+
+- **Adobe red `#EB1000` is the logo colour and nothing else.** In that whole bundle it is
+  declared once, as `--feds-color-adobeBrand`, and dresses only the logo. Adobe's working UI
+  accent is `#3B63FB`. So red is the ABV mark here and the reserved critical status, and blue
+  does the work — exactly how Adobe uses them.
+- **Adobe Clean can't be loaded.** It is Typekit-licensed and the artifact CSP admits only
+  Google Fonts. Adobe's own declared fallback is Source Sans Pro, which Google Fonts ships as
+  **Source Sans 3** — so that, with Source Code Pro for data.
+- **Spectrum's `gray-500` is not a text colour.** `#909090` is 3.19:1 on white and fails AA.
+  It is a placeholder colour and is used as one; muted text bottoms out at `gray-600`.
+
+Light and dark are both designed, not flipped — the chart palette was re-checked against each
+surface separately. Every colour pair on the page was run through a WCAG checker and every
+chart palette through a six-check colourblind/contrast validator. Full keyboard operation,
+`forced-colors` support, and a `<noscript>` fallback that drops the tabs and prints the whole
+thing as one document.
 
 ## Build
 
