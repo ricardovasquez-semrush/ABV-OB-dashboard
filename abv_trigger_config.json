@@ -1,6 +1,6 @@
 {
   "_doc": "Config for the ABV OB In Progress daily rebuild. Prompt text lives in abv_trigger_prompt.md. NOTE: the Monday server is supplied through mcp_connections (connector_uuid e9a2b928-...), NOT through mcp_config — the FY26 trigger's mcp_config carries only the remote-devices bridge, which is not mounted in scheduled sessions. Copying mcp_config verbatim would have shipped a trigger with no Monday access. Verify the echo against invariants[] after every send: resends are documented to drop fields silently.",
-  "trigger_id": null,
+  "trigger_id": "trig_016ABnWHXKb2xEfR43J2rLDU",
   "cron_expression": "30 11 * * 1-5",
   "cron_note": "11:30 UTC = 7:30 AM EDT, 30 min after the FY26 rebuild (0 11) so the two runs never contend for Monday. Weekdays only: the board does not move at weekends. Tommy asked for 'daily' — if he means seven days, change 1-5 to *.",
   "chat_project_id": "claude_proj_011CbieKUwias4pMYWa2VdxV",
@@ -50,5 +50,20 @@
     "abv.py",
     "Artifact",
     "SendUserFile"
-  ]
+  ],
+  "name": "ABV OB In Progress — Daily Rebuild",
+  "permission_event": {
+    "data": {
+      "request": {
+        "mode": "auto",
+        "subtype": "set_permission_mode"
+      },
+      "request_id": "set-perm-mode-abv-ob-daily-rebuild-0001",
+      "type": "control_request",
+      "uuid": "a41d9c73-5b28-4e6f-9d10-72c8ab35f1e4"
+    }
+  },
+  "prompt_event_uuid": "6e2b8f41-0c93-4a77-b5d2-18ef4a90c3b6",
+  "created_utc": "2026-09-09T17:40:58Z",
+  "next_run_utc": "2026-09-10T11:34:22Z"
 }

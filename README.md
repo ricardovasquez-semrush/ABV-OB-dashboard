@@ -81,7 +81,22 @@ email-shaped reaches the rendered output.
 A scheduled weekday run (`30 11 * * 1-5` — 7:30 AM EDT, half an hour after the FY26 rebuild
 so the two never contend for Monday) re-crawls, rebuilds and republishes to the same URL.
 Prompt and invariants: [`abv_trigger_prompt.md`](abv_trigger_prompt.md),
-[`abv_trigger_config.json`](abv_trigger_config.json).
+[`abv_trigger_config.json`](abv_trigger_config.json). Trigger
+`trig_016ABnWHXKb2xEfR43J2rLDU`.
+
+`abv_send_trigger.py` emits the create/update body from those two files and diffs an echoed
+response back against them — resends are documented to drop fields silently, so the prompt is
+never hand-retyped and the echo is always checked.
+
+**Monday reaches a scheduled session through `mcp_connections`, not `mcp_config`.** The FY26
+trigger's `mcp_config` holds only the remote-devices bridge, which isn't mounted in scheduled
+sessions at all; copying it verbatim would ship a trigger with no board access.
+
+**One manual step before the page refreshes itself:** upload `abv.py` and `abv_pull.md` to the
+claude.ai project through the project UI. The scheduled sandbox has no access to this Mac and no
+git credentials, so it fetches its bundle from project knowledge docs. Until they're there the run
+still crawls, writes the snapshot and sends a summary — it just says loudly that it couldn't build
+the page. That path is proven: the first hand-fired run (2026-09-09) took it cleanly.
 
 If a run fails, the page says so itself: past 26 hours without a refresh a banner appears at
 the top. No banner means the figures are current.
