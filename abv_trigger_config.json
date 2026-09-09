@@ -1,0 +1,54 @@
+{
+  "_doc": "Config for the ABV OB In Progress daily rebuild. Prompt text lives in abv_trigger_prompt.md. NOTE: the Monday server is supplied through mcp_connections (connector_uuid e9a2b928-...), NOT through mcp_config — the FY26 trigger's mcp_config carries only the remote-devices bridge, which is not mounted in scheduled sessions. Copying mcp_config verbatim would have shipped a trigger with no Monday access. Verify the echo against invariants[] after every send: resends are documented to drop fields silently.",
+  "trigger_id": null,
+  "cron_expression": "30 11 * * 1-5",
+  "cron_note": "11:30 UTC = 7:30 AM EDT, 30 min after the FY26 rebuild (0 11) so the two runs never contend for Monday. Weekdays only: the board does not move at weekends. Tommy asked for 'daily' — if he means seven days, change 1-5 to *.",
+  "chat_project_id": "claude_proj_011CbieKUwias4pMYWa2VdxV",
+  "environment_id": "env_011111111111111111111117",
+  "artifact_url": "https://claude.ai/code/artifact/0d2649df-3387-4b0b-bfbe-b3410a461b43",
+  "session_context": {
+    "allowed_tools": [
+      "preset:default",
+      "Bash",
+      "Glob",
+      "Grep",
+      "Read",
+      "Edit",
+      "Write",
+      "TodoWrite",
+      "BashOutput",
+      "SendUserFile",
+      "Artifact"
+    ],
+    "model": "claude-opus-5"
+  },
+  "mcp_connections": [
+    {
+      "connector_uuid": "e9a2b928-6092-4726-acac-587a31d24d5c",
+      "name": "monday_com",
+      "transport_type": "http",
+      "url": "https://mcp.monday.com/mcp",
+      "permitted_tools": [],
+      "tool_policy_overrides": [],
+      "clear_tool_policy_overrides": false
+    }
+  ],
+  "invariants": [
+    "0d2649df-3387-4b0b-bfbe-b3410a461b43",
+    "18372591859",
+    "group_mm6c6h21",
+    "group_mm6cwt2z",
+    "boolean_mm71c8h0",
+    "formula_mkzb9602",
+    "e9a2b928-6092-4726-acac-587a31d24d5c",
+    "https://mcp.monday.com/mcp",
+    "NEVER call monday-code `execute_code`",
+    "NEVER pass a `capabilities` argument",
+    "NEVER judge these accounts against the board's 42-day time-to-value target",
+    "NEVER read `email_mkyrsh69`",
+    "NO person filter",
+    "abv.py",
+    "Artifact",
+    "SendUserFile"
+  ]
+}
